@@ -1,0 +1,127 @@
+* {
+  box-sizing: border-box;
+}
+
+ul {
+  list-style-type: none;
+}
+
+body {
+  font-family: Verdana, sans-serif;
+}
+
+.calendar {
+  width: 100%;
+}
+.waitCursor{
+  * {
+    cursor: wait !important;
+  }
+}
+.month {
+  padding: 20px 20px;
+  width: 100%;
+  background: #ffd3d5;
+  text-align: center;
+}
+
+.month ul {
+  margin: 0;
+  padding: 0;
+}
+
+.monthName {
+  text-align: center;
+}
+
+.month ul li {
+  color: black;
+  font-size: 16px;
+  text-transform: uppercase;
+  letter-spacing: 3px;
+}
+
+.month .prev {
+  float: left;
+  padding-top: 10px;
+  cursor: pointer;
+}
+
+.month .next {
+  float: right;
+  padding-top: 10px;
+  cursor: pointer;
+}
+
+.weekdays {
+  margin: 0;
+  padding: 10px 0 10px 20px;
+  background-color: #e1babc;
+}
+
+.weekdays li {
+  display: inline-block;
+  width: 13.6%;
+  color: #666;
+  text-align: center;
+}
+
+.days {
+  padding: 10px 0 10px 20px;
+  background: #eee;
+  margin: 0;
+}
+
+.days li {
+  list-style-type: none;
+  display: inline-block;
+  width: 13.6%;
+  text-align: center;
+  margin-bottom: 5px;
+  font-size: 13px;
+  color: black;
+  cursor: pointer;
+}
+
+.days li :hover {
+  font-weight:bold;
+  font-size: 15px;
+}
+
+.days li .active {
+  padding: 8px;
+  //border-radius: 50%;
+  background: #ffd3d5;
+  color: black !important
+}
+
+.days li .weekend {
+  color: #ff0e00 !important
+}
+
+.dayOfAnotherMonth {
+  color: #919191 !important;
+  cursor: default !important;
+}
+
+/* Add media queries for smaller screens */
+@media screen and (max-width: 720px) {
+  .weekdays li, .days li {
+    width: 13.1%;
+  }
+}
+
+@media screen and (max-width: 420px) {
+  .weekdays li, .days li {
+    width: 12.5%;
+  }
+  .days li .active {
+    padding: 2px;
+  }
+}
+
+@media screen and (max-width: 290px) {
+  .weekdays li, .days li {
+    width: 12.2%;
+  }
+}

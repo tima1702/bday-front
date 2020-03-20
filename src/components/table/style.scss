@@ -1,0 +1,45 @@
+.td-sm { /*small cell*/
+  text-align: center;
+  width: 50px;
+  vertical-align: middle;
+}
+
+.td-m { /*middle cell*/
+  text-align: center;
+  width: 60px;
+  vertical-align: middle;
+}
+
+.td-l { /*large cell*/
+  width: 60%;
+  vertical-align: middle;
+}
+
+.th-l { /*large cell для заголовков таблиц*/
+  width: 70%;
+  text-align: center;
+  vertical-align: middle;
+}
+
+.td-action {
+  text-align: right;
+  width: 0;
+  white-space: nowrap;
+}
+
+table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+th, td {
+  border-bottom: 1px solid #ddd;
+  padding: 2px;
+}
+th {
+  background-color: #f5f5f5;
+  padding: 8px;
+}
+tr:hover {
+  background-color: #f5f5f5;
+}

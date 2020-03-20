@@ -6,7 +6,6 @@ export const calendarFetchList = createAction('service/general', id => ({
   payload: CalendarService.list(),
 }));
 
-
 const initState = {
   list: getDefaultState(),
 };
