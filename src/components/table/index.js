@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import './style.scss'
-//import Spinner from "../Spinners";
+import Spinner from "../Spinners";
 
 function Table({classNameTable, classNameTableHead, header, content, isLoading}) {
 
@@ -8,7 +8,7 @@ function Table({classNameTable, classNameTableHead, header, content, isLoading})
     if (isLoading) {
         modifiedContent = <tr>
             <td colSpan={header.length}>
-                {/*<Spinner className='loader1'/>*/}
+                <Spinner className='loader1'/>
             </td>
         </tr>;
     } else {

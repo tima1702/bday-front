@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {} from 'react';
 import moment from "moment";
 import './style.scss';
 
@@ -15,7 +15,6 @@ function Calendar({date, importantDates, clickPrevButton, clickNextButton,classN
 
     for (let i = 1; i < firstDayOfMonth; i++) {//добавляем дни предыдущего месяца (бледные)
         let per = moment('01/' + date.format('MM/YYYY'), "DD/MM/YYYY").subtract((firstDayOfMonth - i), 'days').format('DD');
-
         arrayOfDays.push(<li className='dayOfAnotherMonth' key={'dayOfLastMonth' + i}>{per}</li>);
     }
 
@@ -26,7 +25,7 @@ function Calendar({date, importantDates, clickPrevButton, clickNextButton,classN
             classWeekend = "weekend";
         }
 
-        if (importantDates.includes(i + 1)) {//выделение тех дней, где есть события (ДР)
+        if (importantDates.includes(i + 1)) {//выделение тех дней, где есть важные события
             arrayOfDays.push(<li key={'day' + i}><span className={"active " + classWeekend}>{i + 1}</span>
             </li>);
         } else {
@@ -37,7 +36,7 @@ function Calendar({date, importantDates, clickPrevButton, clickNextButton,classN
     for (let i = 0; i < (7 - lastDayOfMonth); i++) {//добавляем дни следующего месяца (бледные)
         arrayOfDays.push(<li className='dayOfAnotherMonth' key={'dayOfNextMonth' + i}>{i + 1}</li>);
     }
-//console.log(classNameCursor);
+
     return (<div className={'calendar '+classNameCursor}>
         <div className="month">
             <ul>

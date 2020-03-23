@@ -1,4 +1,4 @@
-.router{
+.router {
   ul {
     list-style-type: none;
     margin: 0;
@@ -6,6 +6,7 @@
     overflow: hidden;
     background-color: lightgrey;
   }
+
   li {
     float: left;
   }
@@ -16,7 +17,12 @@
 
   li a:hover {
     background-color: darkgrey;
-
+  }
+  img {
+    text-align: center;
+    text-decoration: none;
+    display: block;
+    padding: 5px 5px 5px 12px;
   }
 }
 
@@ -27,3 +33,4 @@
   padding: 14px 16px;
   text-decoration: none;
 }
+

@@ -11,4 +11,4 @@ function Button({className, onClick, children}) {
     );
 }
 
-export default Button
+export default Button;

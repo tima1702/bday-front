@@ -1,17 +1,17 @@
 .td-sm { /*small cell*/
   text-align: center;
-  width: 50px;
+  width: 7%;
   vertical-align: middle;
 }
 
 .td-m { /*middle cell*/
   text-align: center;
-  width: 60px;
+  width: 20%;
   vertical-align: middle;
 }
 
 .td-l { /*large cell*/
-  width: 60%;
+  width: 70%;
   vertical-align: middle;
 }
 
@@ -34,9 +34,11 @@ table {
 
 th, td {
   border-bottom: 1px solid #ddd;
-  padding: 2px;
+  padding: 7px;
 }
 th {
+  text-transform: uppercase;
+  letter-spacing: 1px;
   background-color: #f5f5f5;
   padding: 8px;
 }
