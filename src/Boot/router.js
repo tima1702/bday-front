@@ -1,8 +1,9 @@
 import React, {useState} from 'react';
-import {BrowserRouter as Router, Route, Switch, Link} from 'react-router-dom';
+import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
 import CalendarPage from '../Pages/Main';
 import ShowAllBdayPage from "../Pages/ShowAllBday";
 import PagesHeaders from "../Pages/pagesHeader";
+import ShowAllTemplatesPage from "../Pages/ShowAllTemplates";
 
 export default function () {
     return (
@@ -12,10 +13,13 @@ export default function () {
                 <Route path="/" exact>
                     <CalendarPage/>
                 </Route>
-                <Route path="/AddBday">
-                </Route>
-                <Route path="/ShowAllBdays">
+                {/*<Route path="/AddBday">*/}
+                {/*</Route>*/}
+                <Route path="/show-all-birthday">
                     <ShowAllBdayPage/>
+                </Route>
+                <Route path="/show-all-templates">
+                    <ShowAllTemplatesPage/>
                 </Route>
             </Switch>
         </Router>

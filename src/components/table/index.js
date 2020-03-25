@@ -23,9 +23,10 @@ function Table({classNameTable, classNameTableHead, header, content, isLoading,c
                 <tr key={'content' + i}>
                     {item.map((itemChild, j) => (
                         <td key={'content' + i + '.' + j} colSpan={itemChild.colSpan} className={itemChild.className}>
-                            {itemChild.children}
+                           {itemChild.children}
                         </td>
                     ))}
+
                 </tr>
             ))
         }

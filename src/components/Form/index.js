@@ -10,7 +10,7 @@ function Form({editData, onSave}) {
     const [err, setErr] = useState(validation(data));
 
     return (
-        <form className={'formAddBday'}>
+        <><form className={'formAddBday'}>
             <label>First Name<ErrorBlock content={err.firstName}/>
                 <Input
                     placeholder={'Enter first name..'}
@@ -38,9 +38,9 @@ function Form({editData, onSave}) {
                         setErr(validation({...data, date: e.target.value}));
                     }}/>
             </label>
-            <Button onClick={() => onSave(data)} disabled={err.show ? ('disabled') : ('')}
-                    className="btnSave">Save</Button>
         </form>
+        <Button onClick={() => onSave(data)} disabled={err.show ? ('disabled') : ('')}
+    className="btnSave">Save</Button></>
     );
 }
 

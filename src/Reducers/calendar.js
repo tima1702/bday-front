@@ -2,19 +2,19 @@ import { createAction, createReducer } from '@reduxjs/toolkit';
 import { getDefaultState, getDefaultHandler } from '../Utils/reduxTools';
 import CalendarService from '../Services/CalendarService';
 
-export const calendarFetchList = createAction('service/fetch', () => ({
-  payload: CalendarService.fetchList(),
+export const calendarFetchListOfBdays = createAction('service/bdays/fetch', () => ({
+  payload: CalendarService.fetchListOfBdays(),
 }));
 
-export const calendarDeleteBday = createAction('service/delete', id => ({
+export const calendarDeleteBday = createAction('service/bdays/delete', id => ({
   payload: CalendarService.deleteBday(id),
 }));
 
-export const calendarAddBday = createAction('service/add', data => ({
+export const calendarAddBday = createAction('service/bdays/add', data => ({
   payload: CalendarService.addBday(data),
 }));
 
-export const calendarEditBday = createAction('service/edit', (id,data) => ({
+export const calendarEditBday = createAction('service/bdays/edit', (id,data) => ({
   payload: CalendarService.editBday(id,data),
 }));
 
@@ -26,7 +26,7 @@ const initState = {
 };
 
 export default createReducer(initState, {
-  ...getDefaultHandler(calendarFetchList, 'list'),
+  ...getDefaultHandler(calendarFetchListOfBdays, 'list'),
   ...getDefaultHandler(calendarDeleteBday, 'delete'),
   ...getDefaultHandler(calendarAddBday, 'add'),
   ...getDefaultHandler(calendarEditBday, 'edit'),

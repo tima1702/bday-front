@@ -1,6 +1,6 @@
 import React, {useCallback, useEffect, useState} from 'react';
 import {shallowEqual, useDispatch, useSelector} from 'react-redux';
-import {calendarFetchList, calendarDeleteBday, calendarEditBday} from '../../Reducers/calendar';
+import {calendarFetchListOfBdays, calendarDeleteBday, calendarEditBday} from '../../Reducers/calendar';
 import moment from "moment";
 import Calendar from "../../components/calendar";
 import './style.scss';
@@ -18,19 +18,19 @@ function CalendarPage() {
     const [editData, setEditData] = useState({id: null, firstName: '', lastName: '', data: {}, date: ''});//редактируемые данные, которые отобажаются в модалке
 
     useEffect(() => {
-        dispatch(calendarFetchList());
+        dispatch(calendarFetchListOfBdays());
     }, [dispatch]);
 
     const handleEdit = useCallback((id, date) => {
         dispatch(calendarEditBday(id, date)).then(() => {
-            dispatch(calendarFetchList());
+            dispatch(calendarFetchListOfBdays());
         }).catch(() => {
             //обработать возможные ошибки
         })
     }, []);
 
     const handleDelete = useCallback((id) => {
-        dispatch(calendarDeleteBday(id)).then(() => dispatch(calendarFetchList())).catch(() => {
+        dispatch(calendarDeleteBday(id)).then(() => dispatch(calendarFetchListOfBdays())).catch(() => {
             //обработать возможные ошибки
         })
     }, []);
@@ -87,12 +87,15 @@ function CalendarPage() {
     //return <div>CalendarPage{JSON.stringify(payload)}</div>;
     return <div>
         <Modal show={showModal} header={'Edit birthday'}
-               content={<Form onSave={(data) => handleEdit(data.id, {
-                   firstName: data.firstName,
-                   lastName: data.lastName,
-                   data: data.data,
-                   date: moment(data.date + ' +0000', 'DD-MM-YYYY Z').unix(),
-               })} editData={editData}/>}
+               content={<Form onSave={(data) => {
+                   handleEdit(data.id, {
+                       firstName: data.firstName,
+                       lastName: data.lastName,
+                       data: data.data,
+                       date: moment(data.date + ' +0000', 'DD-MM-YYYY Z').unix(),
+                   });
+                   setShowModal(false);
+               }} editData={editData}/>}
                toClose={() => setShowModal(false)}
         />
         <Calendar date={dateForCalendar}

@@ -1,8 +1,8 @@
-import {getBdaysList, deleteBday, addBday, editBday} from "../api";
+import {getBdaysList, deleteBday, addBday, editBday,getTemplatesList} from "../api";
 import moment from "moment";
 
 class CalendarService {
-    fetchList() {
+    fetchListOfBdays() {
         return getBdaysList().then(res => res.data);
         // return new Promise(resolve => {
         //     setTimeout(resolve, 3000, fakeData);
@@ -16,6 +16,12 @@ class CalendarService {
     }
     editBday(id,data) {
         return editBday(id,data).then(res => res);
+    }
+
+    ///////////
+
+    fetchListOfTemplates() {
+        return getTemplatesList().then(res => res.data);
     }
 }
 

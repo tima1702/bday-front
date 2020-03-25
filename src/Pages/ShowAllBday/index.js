@@ -1,6 +1,6 @@
 import React, {useCallback, useEffect, useState} from 'react';
 import {shallowEqual, useDispatch, useSelector} from 'react-redux';
-import {calendarDeleteBday, calendarFetchList, calendarEditBday} from '../../Reducers/calendar';
+import {calendarDeleteBday, calendarFetchListOfBdays, calendarEditBday} from '../../Reducers/calendar';
 import './style.scss';
 import Table from "../../components/table";
 import Button from "../../components/Button";
@@ -21,14 +21,14 @@ function ShowAllBdayPage() {
     const [currentId, setCurrentId] = useState(null);//айди ДР, с которым в данный момент работает пользователь
 
     useEffect(() => {
-        dispatch(calendarFetchList());
+        dispatch(calendarFetchListOfBdays());
     }, [dispatch]);
 
     const handleDelete = useCallback((id) => {
         dispatch(calendarDeleteBday(id)).then(() => {
             setCurrentId(null);
             setShowSimpleModal(false);
-            dispatch(calendarFetchList());
+            dispatch(calendarFetchListOfBdays());
         }).catch(() => {
             //обработать возможные ошибки
         })
@@ -36,7 +36,7 @@ function ShowAllBdayPage() {
 
     const handleEdit = useCallback((id, date) => {
         dispatch(calendarEditBday(id, date)).then(() => {
-            dispatch(calendarFetchList());
+            dispatch(calendarFetchListOfBdays());
         }).catch(() => {
             //обработать возможные ошибки
         })
@@ -47,7 +47,8 @@ function ShowAllBdayPage() {
     if (!isLoading) {
         tablePattern.content = [];
         if (viewMode) {//VIEW MODE
-            let i = 1;
+            const maxBdaysInMonth = getMaxBdaysInMonth(payload);
+            let per = 0;
             for (const item in payload) {
                 tablePattern.content = [];
                 tablePattern.content.push([
@@ -58,19 +59,47 @@ function ShowAllBdayPage() {
                         colSpan: '2'
                     },
                 ]);
-                payload[item].forEach((subItem, subIndex) => {
-                    tablePattern.content.push([
-                        {
-                            name: 'date', className: 'td-m',
-                            children: subItem.day
-                        },
-                        {
-                            name: 'name',
-                            children: subItem.fullName,
-                            className: 'th-l',
-                        },
-                    ]);
-                });
+                //
+                for (let i = 0; i < maxBdaysInMonth[~~(per / 3)]; i++) {
+                    try {
+                        tablePattern.content.push([
+                            {
+                                name: 'date', className: 'td-m',
+                                children: payload[item][i].day
+                            },
+                            {
+                                name: 'name',
+                                children: payload[item][i].fullName,
+                                className: 'td-l',
+                            },
+                        ]);
+                    } catch (e) {//добавляем пустые строки, чтобы таблицы выглядели красиво
+                        tablePattern.content.push([
+                            {
+                                name: 'date', className: 'td-m',
+                                children: '\u00A0',
+                            },
+                            {
+                                name: 'name',
+                                children: '\u00A0',
+                                className: 'td-l',
+                            },
+                        ]);
+                    }
+                }
+                // payload[item].forEach((subItem) => {
+                //     tablePattern.content.push([
+                //         {
+                //             name: 'date', className: 'td-m',
+                //             children: subItem.day
+                //         },
+                //         {
+                //             name: 'name',
+                //             children: subItem.fullName,
+                //             className: 'td-l',
+                //         },
+                //     ]);
+                // });
 
                 table.push(<Table key={'table' + item}
                                   classNameTable={'tableForViewMode'}
@@ -78,7 +107,7 @@ function ShowAllBdayPage() {
                                   classNameTableHead={'heading'}
                                   header={tablePattern.header} content={tablePattern.content}
                                   isLoading={isLoading}/>);
-                i++;
+                per++;
 
             }
         } else {
@@ -107,7 +136,7 @@ function ShowAllBdayPage() {
                                           }}/>,
                         <Button key={'ButtonDelete' + subIndex} children={'Delete'} className={"btnDelete"}
                                 onClick={() => {
-                                    setCurrentId(subItem.id)
+                                    setCurrentId(subItem.id);
                                     setShowSimpleModal(true);
                                 }}/>];
                     // handleDelete(subItem.id)
@@ -145,12 +174,15 @@ function ShowAllBdayPage() {
                </>}
                toClose={() => setShowSimpleModal(false)}/>
         <Modal show={showModal} header={'Edit birthday'}
-               content={<Form onSave={(data) => handleEdit(data.id, {
-                   firstName: data.firstName,
-                   lastName: data.lastName,
-                   data: data.data,
-                   date: moment(data.date + ' +0000', 'DD-MM-YYYY Z').unix(),
-               })} editData={editData}/>}
+               content={<Form onSave={(data) => {
+                   handleEdit(data.id, {
+                       firstName: data.firstName,
+                       lastName: data.lastName,
+                       data: data.data,
+                       date: moment(data.date + ' +0000', 'DD-MM-YYYY Z').unix(),
+                   });
+                   setShowModal(false);
+               }} editData={editData}/>}
                toClose={() => setShowModal(false)}/>
         <br/>
         <Button className={'viewModeButton'} children={'view mode'} onClick={() => setViewMode(!viewMode)}/><br/>
@@ -171,3 +203,17 @@ let tablePattern = {
     ],
     content: []
 };
+
+function getMaxBdaysInMonth(payload) {
+    //возвращается [a,b,c,d], где абсд - максимальные кол-ва др
+    // в группе месяцев (для рисования одинаковых таблиц)
+    let array = [1, 1, 1, 1];
+    let per = 0;
+    for (const item in payload) {
+        // ~~ - это сокращенный Math.floor()
+        // (~~(per/3)) - разбиваем месяцы на группы по три (остаток от деления на 3 округленный до целого)
+        array[~~(per / 3)] = (array[~~(per / 3)] < payload[item].length) ? payload[item].length : array[~~(per / 3)];
+        per++;
+    }
+    return array;
+}

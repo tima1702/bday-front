@@ -1,12 +1,12 @@
 export function getBdaysList() {
-    return fetch('http://localhost:3001/bdays', {
+    return fetch('https://bday-back.herokuapp.com/bdays', {
         method: 'GET',
     }).then(res => res.json()
     ).catch(err => err);
 }
 
 export function addBday(data) {
-    return fetch('http://localhost:3001/bdays', {
+    return fetch('https://bday-back.herokuapp.com/bdays', {
         method: 'POST',
         body: JSON.stringify(data),
         headers: {
@@ -17,14 +17,14 @@ export function addBday(data) {
 }
 
 export function deleteBday(id) {
-    return fetch('http://localhost:3001/bdays/'+id, {
+    return fetch('https://bday-back.herokuapp.com/bdays/'+id, {
         method: 'DELETE',
     }).then(res => res.json()
     ).catch(err => err);
 }
 
 export function editBday(id,data) {
-    return fetch('http://localhost:3001/bdays/'+id, {
+    return fetch('https://bday-back.herokuapp.com/bdays/'+id, {
         method: 'PUT',
         body: JSON.stringify(data),
         headers: {
@@ -33,3 +33,11 @@ export function editBday(id,data) {
     }).then(res => res.json()
     ).catch(err => err);
 }
+
+export function getTemplatesList() {
+    return fetch('http://localhost:3001/templates', {
+        method: 'GET',
+    }).then(res => res.json()
+    ).catch(err => err);
+}
+

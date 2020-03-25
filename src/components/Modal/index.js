@@ -1,8 +1,9 @@
-import React, {} from "react";
+import React, {useEffect, useState} from "react";
 import Button from "../../components/Button";
 import './style.scss';
+import {calendarFetchListsOfTemplates} from "../../Reducers/templates";
 
-function Modal({show, toClose, content,header}) {
+function Modal({show, toClose, content, header}) {
     let modal = null;
     if (show) {
         modal = (
