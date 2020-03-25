@@ -16,6 +16,9 @@ button {
     border: 1px solid darkgrey;
     color: black;
   }
+  &[disabled]{
+    background-color: #ff0002;
+  }
 }
 
 .btnDelete {
@@ -60,4 +63,15 @@ button {
   text-decoration: none;
   cursor: pointer;
   opacity: .75;
+}
+
+.viewModeButton{
+  float: right;
+  font-family: sans-serif;
+  font-size: 16px;
+}
+
+.yesButton{
+  float: right;
+  font-size: 18px;
 }

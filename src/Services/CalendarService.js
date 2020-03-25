@@ -1,4 +1,5 @@
-import {getBdaysList,deleteBday} from "../api";
+import {getBdaysList, deleteBday, addBday, editBday} from "../api";
+import moment from "moment";
 
 class CalendarService {
     fetchList() {
@@ -8,7 +9,13 @@ class CalendarService {
         // });
     }
     deleteBday(id) {
-        return deleteBday(id).then(res => res.data);
+        return deleteBday(id).then(res => res);
+    }
+    addBday(data) {
+        return addBday(data).then(res => res);
+    }
+    editBday(id,data) {
+        return editBday(id,data).then(res => res);
     }
 }
 

@@ -23,7 +23,7 @@ export function deleteBday(id) {
     ).catch(err => err);
 }
 
-export function updateBday(id,data) {
+export function editBday(id,data) {
     return fetch('http://localhost:3001/bdays/'+id, {
         method: 'PUT',
         body: JSON.stringify(data),
