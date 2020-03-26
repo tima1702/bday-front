@@ -54,7 +54,7 @@ function validation(data) {
         date: '',
     };
     //валидация как на сервере
-    const reg = new RegExp('^[a-zA-Zа-яА-Я]{2,15}$');
+    const reg = new RegExp('^[a-zA-Zа-яА-Я-]{2,30}$');
     err.firstName = reg.test(data.firstName) ? '' : 'incorrect value';
     err.lastName = reg.test(data.lastName) ? '' : 'incorrect value';
     //err.date = /^\d{1,2}\/\d{1,2}\/\d{4}$/.test(data.date) ? '' : 'incorrect value (date format: DD/MM/YYYY)';
