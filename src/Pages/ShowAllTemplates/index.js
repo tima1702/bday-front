@@ -6,7 +6,7 @@ import Calendar from "../../components/calendar";
 import './style.scss';
 import Table from "../../components/table";
 import Button from "../../components/Button";
-import Form from "../../components/Form";
+import FormBday from "../../components/FormBday";
 import Modal from "../../components/Modal";
 
 export default function () {

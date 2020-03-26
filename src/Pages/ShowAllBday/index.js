@@ -6,7 +6,7 @@ import Table from "../../components/table";
 import Button from "../../components/Button";
 import iconDelete from '../../image/iconDelete.png';
 import iconEdit from '../../image/iconEdit.png';
-import Form from "../../components/Form";
+import FormBday from "../../components/FormBday";
 import moment from "moment";
 import Modal from "../../components/Modal";
 
@@ -45,6 +45,7 @@ function ShowAllBdayPage() {
     let table = [];
 
     if (!isLoading) {
+        table = [];
         tablePattern.content = [];
         if (viewMode) {//VIEW MODE
             const maxBdaysInMonth = getMaxBdaysInMonth(payload);
@@ -165,6 +166,13 @@ function ShowAllBdayPage() {
         }
 
     }
+    else {
+        //вывести спиннер, если данные с сервера еще не подгрузились
+        table.push(<Table key={'mainTable'} classNameTable={tablePattern.classNameTable}
+                          classNameTableHead={tablePattern.classNameTableHead}
+                          header={tablePattern.header} content={tablePattern.content}
+                          isLoading={isLoading}/>);
+    }
     //console.log('..........', payload);
     //return <div>CalendarPage{JSON.stringify(payload)}</div>;
     return <div>
@@ -174,7 +182,7 @@ function ShowAllBdayPage() {
                </>}
                toClose={() => setShowSimpleModal(false)}/>
         <Modal show={showModal} header={'Edit birthday'}
-               content={<Form onSave={(data) => {
+               content={<FormBday onSave={(data) => {
                    handleEdit(data.id, {
                        firstName: data.firstName,
                        lastName: data.lastName,

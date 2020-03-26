@@ -5,7 +5,7 @@ import Input from "../Input";
 import ErrorBlock from "../Error";
 import moment from "moment";
 
-function Form({editData, onSave}) {
+function FormBday({editData, onSave}) {
     const [data, setData] = useState(editData);
     const [err, setErr] = useState(validation(data));
 
@@ -44,7 +44,7 @@ function Form({editData, onSave}) {
     );
 }
 
-export default Form;
+export default FormBday;
 
 function validation(data) {
     let err = {

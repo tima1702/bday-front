@@ -34,6 +34,8 @@ export function editBday(id,data) {
     ).catch(err => err);
 }
 
+////////////////////////////////////////////////////////////////
+
 export function getTemplatesList() {
     return fetch('http://localhost:3001/templates', {
         method: 'GET',
@@ -41,3 +43,13 @@ export function getTemplatesList() {
     ).catch(err => err);
 }
 
+export function addTemplate(data) {
+    return fetch('http://localhost:3001/templates', {
+        method: 'POST',
+        body: JSON.stringify(data),
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    }).then(res => res.json()
+    ).catch(err => err);
+}

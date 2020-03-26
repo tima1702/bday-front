@@ -6,7 +6,7 @@ import Calendar from "../../components/calendar";
 import './style.scss';
 import Table from "../../components/table";
 import Button from "../../components/Button";
-import Form from "../../components/Form";
+import FormBday from "../../components/FormBday";
 import Modal from "../../components/Modal";
 
 function CalendarPage() {
@@ -87,7 +87,7 @@ function CalendarPage() {
     //return <div>CalendarPage{JSON.stringify(payload)}</div>;
     return <div>
         <Modal show={showModal} header={'Edit birthday'}
-               content={<Form onSave={(data) => {
+               content={<FormBday onSave={(data) => {
                    handleEdit(data.id, {
                        firstName: data.firstName,
                        lastName: data.lastName,

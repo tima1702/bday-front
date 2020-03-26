@@ -6,12 +6,10 @@
   bottom: 0;
   left: 0;
   z-index: 1050;
-  -webkit-transition: opacity 200ms ease-in;
-  -moz-transition: opacity 200ms ease-in;
-  transition: opacity 200ms ease-in; /* анимация перехода */
   margin: 0;
   padding: 0;
   background-color: rgba(0, 0, 0, 0.62);
+  overflow-y: auto;
 }
 /* при отображении модального окна */
 .modal:target {

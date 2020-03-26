@@ -1,13 +1,9 @@
-input {
-  width: 80%;
+textarea {
+  width: 100%;
   font-size: 16px;
   padding: 5px 5px;
   margin: 8px 0;
   box-sizing: border-box;
-}
-
-.editTaskInput {
-  width: 100%;
-  margin: 0;
-  padding: 0;
+  resize: none;
+  font-family: Arial, serif;
 }

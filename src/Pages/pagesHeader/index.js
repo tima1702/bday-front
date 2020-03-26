@@ -3,19 +3,22 @@ import {BrowserRouter as Router, Route, Switch, Link, useLocation,} from 'react-
 import './style.scss';
 import imgBday from '../../image/iconBday.png';
 import Modal from "../../components/Modal";
-import Form from "../../components/Form";
+import FormBday from "../../components/FormBday";
 import {useDispatch} from "react-redux";
 import {calendarAddBday, calendarFetchListOfBdays} from "../../Reducers/calendar";
 import moment from "moment";
 import SnackBar from "../../components/SnackBar";
+import FormTemplate from "../../components/FormTemplate";
+import {calendarAddTemplate, calendarFetchListsOfTemplates} from "../../Reducers/templates";
 
 export default function () {
-    const [showModal, setShowModal] = useState(false);
+    const [showModalBday, setShowModalBday] = useState(false);
+    const [showModalTemplate, setShowModalTemplate] = useState(false);
     const [showSnackBar, setShowSnackBar] = useState(false);
     let location = useLocation();
     const dispatch = useDispatch();
 
-    const handleAdd = useCallback((data) => {
+    const handleAddBday = useCallback((data) => {
         dispatch(calendarAddBday(data)).then((resp) => {
             //выводим сообщение, что все успешно добавлено
             setShowSnackBar(true);
@@ -27,18 +30,39 @@ export default function () {
             //обработать возможные ошибки
         })
     }, []);
-    // () => handleDelete(subItem['id'])
+
+    const handleAddTemplate = useCallback((data) => {
+        dispatch(calendarAddTemplate(data)).then((resp) => {
+
+            setShowSnackBar(true);
+            setTimeout(() => setShowSnackBar(false), 3000);
+            dispatch(calendarFetchListsOfTemplates());
+
+        }).catch((err) => {
+            //console.log('err: '+err);
+            //обработать возможные ошибки
+        })
+    }, []);
+
     return (
         <>
-            <Modal show={showModal} header={'Add birthday'}
-                   content={<Form editData={{firstName: '', lastName: '', data: {}, date: ''}} onSave=
+            <Modal show={showModalBday} header={'Add birthday'}
+                   content={<FormBday editData={{firstName: '', lastName: '', data: {}, date: ''}} onSave=
                        {(data) => {
-                           handleAdd({...data, date: moment(data.date + ' +0000', 'DD-MM-YYYY Z').unix()});
-                           setShowModal(false);
+                           handleAddBday({...data, date: moment(data.date + ' +0000', 'DD-MM-YYYY Z').unix()});
+                           setShowModalBday(false);
                        }}
-                   />} toClose={() => setShowModal(false)}/>
-            <SnackBar show={showSnackBar} content={'Birthday successfully added'}/>
+                   />} toClose={() => setShowModalBday(false)}/>
 
+            <Modal show={showModalTemplate} header={'Add template'}
+                   content={<FormTemplate editData={{title: '', text: '', blocks: [], attachments: []}} onSave=
+                       {(data) => {
+                           handleAddTemplate(data);
+                           setShowModalTemplate(false);
+                       }}
+                   />} toClose={() => setShowModalTemplate(false)}/>
+
+            <SnackBar show={showSnackBar} content={'Birthday successfully added'}/>
 
             <div className='router'>
                 <ul>
@@ -46,20 +70,23 @@ export default function () {
                         <img src={imgBday} alt={'Bday'}/>
                     </li>
                     <li>
-                        <Link to="/" className={('/'===location.pathname)?'active':''}>Main</Link>
-                    </li>
-                    <li>
-                        <Link to={location.pathname} onClick={() => setShowModal(true)}>Add birthday</Link>
-                    </li>
-                    <li>
-                        <Link to="/show-all-birthday" className={('/show-all-birthday'===location.pathname)?'active':''}>Show all birthdays</Link>
+                        <Link to="/" className={('/' === location.pathname) ? 'active' : ''}>Main</Link>
                     </li>
                     <li className="dropdown">
-                        <Link to={location.pathname} className={('/show-all-templates'===location.pathname)?'active':''}>Templates</Link>
-                            <div className="dropdown-content">
-                                <Link to="/show-all-templates">Show all templates</Link>
-                                <Link to={location.pathname}>Add new templates</Link>
-                            </div>
+                        <Link to={location.pathname}
+                              className={('/show-all-birthday' === location.pathname) ? 'active' : ''}>Birthdays</Link>
+                        <div className="dropdown-content">
+                            <Link to={location.pathname} onClick={() => setShowModalBday(true)}>Add birthday</Link>
+                            <Link to="/show-all-birthday">Show all birthdays</Link>
+                        </div>
+                    </li>
+                    <li className="dropdown">
+                        <Link to={location.pathname}
+                              className={('/show-all-templates' === location.pathname) ? 'active' : ''}>Templates</Link>
+                        <div className="dropdown-content">
+                            <Link to={location.pathname} onClick={() => setShowModalTemplate(true)}>Add new templates</Link>
+                            <Link to="/show-all-templates">Show all templates</Link>
+                        </div>
 
                     </li>
                 </ul>

@@ -1,4 +1,4 @@
-import {getBdaysList, deleteBday, addBday, editBday,getTemplatesList} from "../api";
+import {getBdaysList, deleteBday, addBday, editBday, getTemplatesList, addTemplate} from "../api";
 import moment from "moment";
 
 class CalendarService {
@@ -22,6 +22,10 @@ class CalendarService {
 
     fetchListOfTemplates() {
         return getTemplatesList().then(res => res.data);
+    }
+
+    addTemplate(data) {
+        return addTemplate(data).then(res => res);
     }
 }
 
