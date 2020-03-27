@@ -1,4 +1,5 @@
 button {
+  outline: none;
   background-color: lightgrey;
   border: 1px solid lightgrey;
   color: black;
@@ -75,3 +76,43 @@ button {
   float: right;
   font-size: 18px;
 }
+
+.btnHelp{
+  border-radius: 50% !important;
+  padding: 2px 6px 2px 6px;
+
+}
+
+/* Контейнер подсказок */
+.tooltip {
+  position: relative;
+  display: inline-block;
+ // border-bottom: 1px dotted black; /* Если вы хотите многоточия под наведением курсора текстом */
+  &:hover{
+    cursor: pointer;
+    .tooltiptext {
+      visibility: visible;
+    }
+
+  }
+}
+
+/* Текст подсказки */
+.tooltip .tooltiptext {
+  visibility: hidden;
+  width: auto;
+  background-color: rgba(0, 0, 0, 0.8);
+  color: #fff;
+  text-align: center;
+  padding: 5px;
+  border-radius: 6px;
+  white-space: nowrap;
+
+  /* Расположите текста подсказки - см. примеры ниже! */
+  top: -15px;
+  left: 115%;
+  position: absolute;
+  z-index: 1;
+}
+
+/* Показ текста всплывающей подсказки при наведении указателя мыши на контейнер */

@@ -4,6 +4,8 @@ import Button from "../Button";
 import TextArea from "../TextArea";
 import Input from "../Input";
 import ErrorBlock from "../Error";
+import {BrowserRouter as Router, Route, Switch, Link, useLocation,} from 'react-router-dom';
+
 
 function FormTemplate({editData, onSave}) {
     const [data, setData] = useState(editData);
@@ -13,6 +15,11 @@ function FormTemplate({editData, onSave}) {
     useEffect(() => {
         //console.log(data);
     });
+
+    function clickHelp(e) {
+        e.preventDefault();
+        window.open('https://api.slack.com/tools/block-kit-builder');
+    }
 
     return (
         <>
@@ -26,6 +33,7 @@ function FormTemplate({editData, onSave}) {
                             setErr(validation({...data, title: e.target.value}, blocks, setData));
                         }}/>
                 </label>
+
                 <label>Text<ErrorBlock content={err.text}/>
                     <TextArea
                         placeholder={'Enter text..'}
@@ -34,15 +42,18 @@ function FormTemplate({editData, onSave}) {
                             setData({...data, text: e.target.value});
                             setErr(validation({...data, text: e.target.value}, blocks, setData));
                         }}/>
-                </label>
-                <label>Blocks<ErrorBlock content={err.blocks}/> {/*проверять на json*/}
+                </label><Button onClick={clickHelp} className="btnHelp tooltip">?
+                <span className="tooltiptext">open page in new tab - "https://api.slack.com/tools/block-kit-builder"</span></Button>
+                <label>Blocks
+                    <ErrorBlock content={err.blocks}/> {/*проверять на json*/}
                     <TextArea
                         className={'bigTextarea'}
                         placeholder={'Insert JSON from "SLACK Block Kit Builder"'}
                         value={blocks}
                         handleChange={(e) => {
-                            setBlocks(e.target.value);
-                            //setData({...data, blocks: [e.target.value]});
+                            //замена табуляций на два пробела - иначе скопированный с
+                            // block kit builder текст расползается и выглядит нечитабельным
+                            setBlocks(e.target.value.replace(/\u0009/g, "  "));
                             setErr(validation(data, e.target.value, setData));
 
                         }}/>
@@ -76,7 +87,9 @@ function validation(data, blocks, setData) {
         //setData({...data, blocks: [].concat(per.blocks)});
     } catch (e) {
         err.blocks = 'JSON error';
-        try{setData({...data, blocks: []});}catch (e) {
+        try {
+            setData({...data, blocks: []});
+        } catch (e) {
 
         }
     }

@@ -9,23 +9,33 @@ import {calendarAddBday, calendarFetchListOfBdays} from "../../Reducers/calendar
 import moment from "moment";
 import SnackBar from "../../components/SnackBar";
 import FormTemplate from "../../components/FormTemplate";
-import {calendarAddTemplate, calendarFetchListsOfTemplates} from "../../Reducers/templates";
+import {calendarAddTemplate, calendarFetchListOfTemplates} from "../../Reducers/templates";
 
 export default function () {
     const [showModalBday, setShowModalBday] = useState(false);
     const [showModalTemplate, setShowModalTemplate] = useState(false);
     const [showSnackBar, setShowSnackBar] = useState(false);
+    const [snackBarContent, setSnackBarContent] = useState('');
+
     let location = useLocation();
     const dispatch = useDispatch();
 
     const handleAddBday = useCallback((data) => {
         dispatch(calendarAddBday(data)).then((resp) => {
-            //выводим сообщение, что все успешно добавлено
+            //выводим сообщение
+            if (resp.ok) {
+                setSnackBarContent('Birthday successfully added');
+            } else {
+                setSnackBarContent('Error: '+resp.statusText);
+            }
             setShowSnackBar(true);
             setTimeout(() => setShowSnackBar(false), 3000);
             dispatch(calendarFetchListOfBdays());
 
         }).catch((err) => {
+            setSnackBarContent('Error: '+err);
+            setShowSnackBar(true);
+            setTimeout(() => setShowSnackBar(false), 3000);
             //console.log('err: '+err);
             //обработать возможные ошибки
         })
@@ -33,10 +43,15 @@ export default function () {
 
     const handleAddTemplate = useCallback((data) => {
         dispatch(calendarAddTemplate(data)).then((resp) => {
+            if (resp.ok) {
+                setSnackBarContent('Templates successfully added');
+            } else {
+                setSnackBarContent('Error: '+resp.statusText);
+            }
 
             setShowSnackBar(true);
             setTimeout(() => setShowSnackBar(false), 3000);
-            dispatch(calendarFetchListsOfTemplates());
+            dispatch(calendarFetchListOfTemplates());
 
         }).catch((err) => {
             //console.log('err: '+err);
@@ -62,7 +77,7 @@ export default function () {
                        }}
                    />} toClose={() => setShowModalTemplate(false)}/>
 
-            <SnackBar show={showSnackBar} content={'Birthday successfully added'}/>
+            <SnackBar show={showSnackBar} content={snackBarContent}/>
 
             <div className='router'>
                 <ul>
@@ -84,7 +99,8 @@ export default function () {
                         <Link to={location.pathname}
                               className={('/show-all-templates' === location.pathname) ? 'active' : ''}>Templates</Link>
                         <div className="dropdown-content">
-                            <Link to={location.pathname} onClick={() => setShowModalTemplate(true)}>Add new templates</Link>
+                            <Link to={location.pathname} onClick={() => setShowModalTemplate(true)}>Add new
+                                templates</Link>
                             <Link to="/show-all-templates">Show all templates</Link>
                         </div>
 

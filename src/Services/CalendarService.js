@@ -1,4 +1,12 @@
-import {getBdaysList, deleteBday, addBday, editBday, getTemplatesList, addTemplate} from "../api";
+import {
+    getBdaysList,
+    deleteBday,
+    addBday,
+    editBday,
+    getTemplatesList,
+    addTemplate,
+    deleteTemplate,
+} from "../api";
 import moment from "moment";
 
 class CalendarService {
@@ -8,14 +16,17 @@ class CalendarService {
         //     setTimeout(resolve, 3000, fakeData);
         // });
     }
+
     deleteBday(id) {
         return deleteBday(id).then(res => res);
     }
+
     addBday(data) {
         return addBday(data).then(res => res);
     }
-    editBday(id,data) {
-        return editBday(id,data).then(res => res);
+
+    editBday(id, data) {
+        return editBday(id, data).then(res => res);
     }
 
     ///////////
@@ -26,6 +37,10 @@ class CalendarService {
 
     addTemplate(data) {
         return addTemplate(data).then(res => res);
+    }
+
+    deleteTemplate(id) {
+        return deleteTemplate(id).then(res => res);
     }
 }
 

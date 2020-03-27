@@ -12,14 +12,14 @@ export function addBday(data) {
         headers: {
             'Content-Type': 'application/json'
         }
-    }).then(res => res.json()
+    }).then(res => res
     ).catch(err => err);
 }
 
 export function deleteBday(id) {
     return fetch('https://bday-back.herokuapp.com/bdays/'+id, {
         method: 'DELETE',
-    }).then(res => res.json()
+    }).then(res => res
     ).catch(err => err);
 }
 
@@ -30,7 +30,7 @@ export function editBday(id,data) {
         headers: {
             'Content-Type': 'application/json'
         }
-    }).then(res => res.json()
+    }).then(res => res
     ).catch(err => err);
 }
 
@@ -50,6 +50,13 @@ export function addTemplate(data) {
         headers: {
             'Content-Type': 'application/json'
         }
-    }).then(res => res.json()
+    }).then(res => res
+    ).catch(err => err);
+}
+
+export function deleteTemplate(id) {
+    return fetch('http://localhost:3001/templates/'+id, {
+        method: 'DELETE',
+    }).then(res => res
     ).catch(err => err);
 }

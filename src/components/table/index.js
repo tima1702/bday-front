@@ -2,7 +2,14 @@ import React, {useState, useEffect} from 'react';
 import './style.scss'
 import Spinner from "../Spinners";
 
-function Table({classNameTable, classNameTableHead, header, content, isLoading,classNameBlock}) {
+function Table({
+                   classNameTable,
+                   classNameTableHead,
+                   header,
+                   content,
+                   isLoading,
+                   classNameBlock,
+               }) {
 
     let modifiedContent;
     if (isLoading) {
@@ -22,8 +29,8 @@ function Table({classNameTable, classNameTableHead, header, content, isLoading,c
             modifiedContent = content.map((item, i) => (
                 <tr key={'content' + i}>
                     {item.map((itemChild, j) => (
-                        <td key={'content' + i + '.' + j} colSpan={itemChild.colSpan} className={itemChild.className}>
-                           {itemChild.children}
+                        <td onClick={itemChild.onClickRow} key={'content' + i + '.' + j} colSpan={itemChild.colSpan} className={itemChild.className}>
+                            {itemChild.children}
                         </td>
                     ))}
 

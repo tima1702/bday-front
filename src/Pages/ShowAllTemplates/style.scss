@@ -1,0 +1,14 @@
+.divTableOfTemplates {
+  width: 30%;
+  min-height: calc(100vh - 48px);
+ border-radius: 0 0 4px 4px;
+  box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.40);
+  display: inline-block;
+}
+.divRightPanel {
+  width: 70%;
+  vertical-align: top;
+  min-height: calc(100vh - 48px);
+  background-color: rgba(0, 0, 0, 0);
+  display: inline-block;
+}

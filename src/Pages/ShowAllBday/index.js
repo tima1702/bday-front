@@ -165,8 +165,7 @@ function ShowAllBdayPage() {
                               isLoading={isLoading}/>);
         }
 
-    }
-    else {
+    } else {
         //вывести спиннер, если данные с сервера еще не подгрузились
         table.push(<Table key={'mainTable'} classNameTable={tablePattern.classNameTable}
                           classNameTableHead={tablePattern.classNameTableHead}
@@ -177,8 +176,12 @@ function ShowAllBdayPage() {
     //return <div>CalendarPage{JSON.stringify(payload)}</div>;
     return <div>
         <Modal show={showSimpleModal} header={'Delete'}
-               content={<>You sure?<Button className={'yesButton'} children={'Yes'}
-                                           onClick={() => handleDelete(currentId)}/>
+               content={<>You sure?
+                   <Button className={'yesButton'}
+                           children={'No'}
+                           onClick={() => setShowSimpleModal(false)}/>
+                   <Button className={'yesButton'} children={'Yes'}
+                           onClick={() => handleDelete(currentId)}/>
                </>}
                toClose={() => setShowSimpleModal(false)}/>
         <Modal show={showModal} header={'Edit birthday'}
