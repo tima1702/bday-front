@@ -1,5 +1,5 @@
-import React, {useCallback, useEffect, useState} from 'react';
-import {BrowserRouter as Router, Route, Switch, Link, useLocation,} from 'react-router-dom';
+import React, {useCallback, useState} from 'react';
+import {Link, useLocation,} from 'react-router-dom';
 import './style.scss';
 import imgBday from '../../image/iconBday.png';
 import Modal from "../../components/Modal";
@@ -44,7 +44,7 @@ export default function () {
     const handleAddTemplate = useCallback((data) => {
         dispatch(calendarAddTemplate(data)).then((resp) => {
             if (resp.ok) {
-                setSnackBarContent('Templates successfully added');
+                setSnackBarContent('Template successfully added');
             } else {
                 setSnackBarContent('Error: '+resp.statusText);
             }
@@ -53,7 +53,7 @@ export default function () {
             setTimeout(() => setShowSnackBar(false), 3000);
             dispatch(calendarFetchListOfTemplates());
 
-        }).catch((err) => {
+        }).catch(() => {
             //console.log('err: '+err);
             //обработать возможные ошибки
         })

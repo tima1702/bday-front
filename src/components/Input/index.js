@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React from 'react';
 import './style.scss'
 
 function Input({className, value, placeholder, size, handleChange,readOnly}) {

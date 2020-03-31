@@ -7,40 +7,52 @@ import moment from "moment";
 
 function FormBday({editData, onSave}) {
     const [data, setData] = useState(editData);
-    const [err, setErr] = useState(validation(data));
+    const [err, setErr] = useState({
+        show: false,
+        firstName: '',
+        lastName: '',
+        date: '',
+    });
 
     return (
-        <><form className={'formAddBday'}>
-            <label>First Name<ErrorBlock content={err.firstName}/>
-                <Input
-                    placeholder={'Enter first name..'}
-                    value={data.firstName}
-                    handleChange={(e) => {
-                        setData({...data, firstName: e.target.value});
-                        setErr(validation({...data, firstName: e.target.value}));
-                    }}/>
-            </label>
-            <label>Last Name<ErrorBlock content={err.lastName}/>
-                <Input
-                    placeholder={'Enter last name..'}
-                    value={data.lastName}
-                    handleChange={(e) => {
-                        setData({...data, lastName: e.target.value});
-                        setErr(validation({...data, lastName: e.target.value}));
-                    }}/>
-            </label>
-            <label>Date<ErrorBlock content={err.date}/>
-                <Input
-                    placeholder={'DD/MM/YYYY'}
-                    value={data.date}
-                    handleChange={(e) => {
-                        setData({...data, date: e.target.value});
-                        setErr(validation({...data, date: e.target.value}));
-                    }}/>
-            </label>
-        </form>
-        <Button onClick={() => onSave(data)} disabled={err.show ? ('disabled') : ('')}
-    className="btnSave">Save</Button></>
+        <>
+            <form className={'formAddBday'}>
+                <label>First Name<ErrorBlock content={err.firstName}/>
+                    <Input
+                        placeholder={'Enter first name..'}
+                        value={data.firstName}
+                        handleChange={(e) => {
+                            setData({...data, firstName: e.target.value});
+                            //setErr(validation({...data, firstName: 'Иван'}));
+                        }}/>
+                </label>
+                <label>Last Name<ErrorBlock content={err.lastName}/>
+                    <Input
+                        placeholder={'Enter last name..'}
+                        value={data.lastName}
+                        handleChange={(e) => {
+                            setData({...data, lastName: e.target.value});
+                            //setErr(validation({...data, lastName: e.target.value}));
+                        }}/>
+                </label>
+                <label>Date<ErrorBlock content={err.date}/>
+                    <Input
+                        placeholder={'DD/MM/YYYY'}
+                        value={data.date}
+                        handleChange={(e) => {
+                            setData({...data, date: e.target.value});
+                            //setErr(validation({...data, date: '01/01/1999'}));
+                        }}/>
+                </label>
+            </form>
+            <Button onClick={() => {
+                //валидация и только потом закрытие формы и др
+                setErr(validation(data));
+                if(!validation(data).show){onSave(data);}
+
+            }}
+                    // disabled={err.show ? ('disabled') : ('')}
+                    className="btnSave">Save</Button></>
     );
 }
 
@@ -61,8 +73,7 @@ function validation(data) {
     if (/^\d{1,2}\/\d{1,2}\/\d{4}$/.test(data.date)) {
         if ((moment(data.date + ' +0000', 'DD-MM-YYYY Z').unix() > 0) && (moment(data.date + ' +0000', 'DD-MM-YYYY Z').unix() < 2147483648)) {
             err.date = '';
-        }
-        else{
+        } else {
             err.date = 'incorrect value';
         }
     } else {

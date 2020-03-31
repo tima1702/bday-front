@@ -4,12 +4,17 @@ import Button from "../Button";
 import TextArea from "../TextArea";
 import Input from "../Input";
 import ErrorBlock from "../Error";
-import {BrowserRouter as Router, Route, Switch, Link, useLocation,} from 'react-router-dom';
 
 
 function FormTemplate({editData, onSave}) {
     const [data, setData] = useState(editData);
-    const [err, setErr] = useState(validation(data, JSON.stringify(data.blocks), null));
+    const [err, setErr] = useState({
+        show: false,
+        title: '',
+        text: '',
+        blocks: '',
+        attachments: '',
+    });
     const [blocks, setBlocks] = useState((JSON.stringify(data.blocks) === '[]') ? '' : JSON.stringify(data.blocks));
 
     useEffect(() => {
@@ -30,7 +35,7 @@ function FormTemplate({editData, onSave}) {
                         value={data.title}
                         handleChange={(e) => {
                             setData({...data, title: e.target.value});
-                            setErr(validation({...data, title: e.target.value}, blocks, setData));
+                            //setErr(validation({...data, title: e.target.value}, blocks, setData));
                         }}/>
                 </label>
 
@@ -40,10 +45,11 @@ function FormTemplate({editData, onSave}) {
                         value={data.text}
                         handleChange={(e) => {
                             setData({...data, text: e.target.value});
-                            setErr(validation({...data, text: e.target.value}, blocks, setData));
+                            //setErr(validation({...data, text: e.target.value}, blocks, setData));
                         }}/>
                 </label><Button onClick={clickHelp} className="btnHelp tooltip">?
-                <span className="tooltiptext">open page in new tab - "https://api.slack.com/tools/block-kit-builder"</span></Button>
+                <span
+                    className="tooltiptext">open page in new tab - "https://api.slack.com/tools/block-kit-builder"</span></Button>
                 <label>Blocks
                     <ErrorBlock content={err.blocks}/> {/*проверять на json*/}
                     <TextArea
@@ -54,13 +60,19 @@ function FormTemplate({editData, onSave}) {
                             //замена табуляций на два пробела - иначе скопированный с
                             // block kit builder текст расползается и выглядит нечитабельным
                             setBlocks(e.target.value.replace(/\u0009/g, "  "));
-                            setErr(validation(data, e.target.value, setData));
+                            //setErr(validation(data, e.target.value, setData));
 
                         }}/>
                 </label>
-
             </form>
-            <Button onClick={() => onSave(data)} disabled={err.show ? ('disabled') : ('')}
+            <Button onClick={() => {
+                setErr(validation(data, blocks, setData));
+                if (!validation(data, blocks, setData).show) {
+                    let per = JSON.parse(blocks);
+                    onSave({...data, blocks: [].concat(per.blocks)});
+                }
+            }}
+                // disabled={err.show ? ('disabled') : ('')}
                     className="btnSave">Save</Button></>
     );
 }
@@ -80,13 +92,12 @@ function validation(data, blocks, setData) {
     err.text = (data.text.length < 1) ? 'the field cannot be empty!' : err.text;
     err.blocks = (blocks.length < 1) ? 'the field cannot be empty!' : err.blocks;
 
-
     try {
         let per = JSON.parse(blocks);
         setData({...data, blocks: [].concat(per.blocks)});
         //setData({...data, blocks: [].concat(per.blocks)});
     } catch (e) {
-        err.blocks = 'JSON error';
+        err.blocks = 'JSON error';// + e;
         try {
             setData({...data, blocks: []});
         } catch (e) {

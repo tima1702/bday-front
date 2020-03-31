@@ -26,6 +26,7 @@
 
 .td-action { /*cell for buttons*/
   text-align: right;
+  vertical-align: middle;
   width: 0;
   white-space: nowrap;
 }
@@ -38,7 +39,7 @@ table {
 
 th, td {
   border-bottom: 1px solid #ddd;
-  padding: 7px;
+  padding: 8px;
 }
 
 th {

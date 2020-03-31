@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React from 'react';
 import './style.scss'
 
 function Spinner({className}) {
@@ -7,4 +7,4 @@ function Spinner({className}) {
     );
 }
 
-export default Spinner
+export default Spinner;

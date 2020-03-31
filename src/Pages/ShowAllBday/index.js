@@ -4,11 +4,10 @@ import {calendarDeleteBday, calendarFetchListOfBdays, calendarEditBday} from '..
 import './style.scss';
 import Table from "../../components/table";
 import Button from "../../components/Button";
-import iconDelete from '../../image/iconDelete.png';
-import iconEdit from '../../image/iconEdit.png';
 import FormBday from "../../components/FormBday";
 import moment from "moment";
 import Modal from "../../components/Modal";
+import SnackBar from "../../components/SnackBar";
 
 function ShowAllBdayPage() {
     const {payload} = useSelector(state => state.calendar.list, shallowEqual);
@@ -19,6 +18,8 @@ function ShowAllBdayPage() {
     const [viewMode, setViewMode] = useState(false);//активаця режима просмотра
     const [showSimpleModal, setShowSimpleModal] = useState(false);//уточняющая модалка
     const [currentId, setCurrentId] = useState(null);//айди ДР, с которым в данный момент работает пользователь
+    const [showSnackBar, setShowSnackBar] = useState(false);
+    const [snackBarContent, setSnackBarContent] = useState('');
 
     useEffect(() => {
         dispatch(calendarFetchListOfBdays());
@@ -35,7 +36,16 @@ function ShowAllBdayPage() {
     }, []);
 
     const handleEdit = useCallback((id, date) => {
-        dispatch(calendarEditBday(id, date)).then(() => {
+        dispatch(calendarEditBday(id, date)).then((resp) => {
+            //выводим сообщение
+            if (resp.ok) {
+                setSnackBarContent('Birthday successfully edit');
+            } else {
+                setSnackBarContent('Error: '+resp.statusText);
+            }
+            setShowSnackBar(true);
+            setTimeout(() => setShowSnackBar(false), 3000);
+
             dispatch(calendarFetchListOfBdays());
         }).catch(() => {
             //обработать возможные ошибки
@@ -195,6 +205,7 @@ function ShowAllBdayPage() {
                    setShowModal(false);
                }} editData={editData}/>}
                toClose={() => setShowModal(false)}/>
+        <SnackBar show={showSnackBar} content={snackBarContent}/>
         <br/>
         <Button className={'viewModeButton'} children={'view mode'} onClick={() => setViewMode(!viewMode)}/><br/>
         <br/>

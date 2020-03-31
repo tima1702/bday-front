@@ -1,11 +1,14 @@
 .divTableOfTemplates {
   width: 30%;
-  min-height: calc(100vh - 48px);
- border-radius: 0 0 4px 4px;
+  min-height: calc(100vh - 50px);
+  border-radius: 4px 4px 4px 4px;
   box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.40);
   display: inline-block;
+  overflow: auto;
 }
+
 .divRightPanel {
+  padding: 5px 5px 5px 15px;
   width: 70%;
   vertical-align: top;
   min-height: calc(100vh - 48px);

@@ -5,9 +5,8 @@ import {
     editBday,
     getTemplatesList,
     addTemplate,
-    deleteTemplate,
+    deleteTemplate, getTemplate, editTemplate,
 } from "../api";
-import moment from "moment";
 
 class CalendarService {
     fetchListOfBdays() {
@@ -42,59 +41,12 @@ class CalendarService {
     deleteTemplate(id) {
         return deleteTemplate(id).then(res => res);
     }
+    fetchTemplate(id) {
+        return getTemplate(id).then(res => res.data);
+    }
+    editTemplate(id, data) {
+        return editTemplate(id, data).then(res => res);
+    }
 }
 
 export default new CalendarService();
-
-// const fakeData = {
-//     January: [],
-//     February: [{
-//         day: 3,
-//         fullName: 'Тимофей Кузнецов',
-//         fields: {
-//             flag: 'rus',
-//         },
-//     }],
-//     March: [{
-//         day: 17,
-//         fullName: 'Тимофей Кузнецов',
-//         fields: {
-//             flag: 'rus',
-//         },
-//     },
-//         {
-//             day: 4,
-//             fullName: 'Тимофей Кузнецов',
-//             fields: {
-//                 flag: 'rus',
-//             },
-//         }],
-//     April: [{
-//         day: 12,
-//         fullName: 'Тимофей Кузнецов',
-//         fields: {
-//             flag: 'rus',
-//         },
-//     },
-//         {
-//             day: 1,
-//             fullName: 'Тимофей Кузнецов',
-//             fields: {
-//                 flag: 'rus',
-//             },
-//         }],
-//     May: [],
-//     June: [],
-//     July: [],
-//     August: [{
-//         day: 30,
-//         fullName: 'Тимофей Кузнецов',
-//         fields: {
-//             flag: 'rus',
-//         },
-//     }],
-//     September: [],
-//     October: [],
-//     November: [],
-//     December: [],
-// };

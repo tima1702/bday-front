@@ -1,0 +1,26 @@
+.divShowTemplate {
+  padding: 5px;
+
+  & b {
+    font-weight: normal;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: #894641;
+    font-size: 16px;
+  }
+
+  & div {
+    font-size: 12px;
+    //overflow-x: hidden;
+    overflow: auto;
+    width: 100%;
+    min-height: 100px;
+    max-height: calc(100vh - 256px);
+    //background: #e1babc;
+    border-collapse: collapse;
+    border: 2px;
+   display: block;
+    padding: 10px;
+    font-family: Courier New, monospace;
+  }
+}
