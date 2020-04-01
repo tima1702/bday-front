@@ -5,7 +5,7 @@ import {
     editBday,
     getTemplatesList,
     addTemplate,
-    deleteTemplate, getTemplate, editTemplate,
+    deleteTemplate, getTemplate, editTemplate, getTemplateWithBday,
 } from "../api";
 
 class CalendarService {
@@ -46,6 +46,10 @@ class CalendarService {
     }
     editTemplate(id, data) {
         return editTemplate(id, data).then(res => res);
+    }
+
+    getTemplateWithBday(templateId,bdayId) {
+        return getTemplateWithBday(templateId,bdayId).then(res => res.data);
     }
 }
 

@@ -2,7 +2,7 @@ import React, {} from "react";
 import './style.scss';
 import Button from "../Button";
 
-function ShowTemplate({payload,toClose}) {
+function ShowTemplate({payload,toClose,getTemplateWithBday}) {
 
     function clickGO(e) {
         e.preventDefault();
@@ -12,6 +12,7 @@ function ShowTemplate({payload,toClose}) {
 
     return (<div className={'divShowTemplate'}>
         <Button onClick={toClose} className="close">×</Button>
+
         <p><b>TITLE:</b></p>
         <blockquote>
             <p>{payload.title}</p>

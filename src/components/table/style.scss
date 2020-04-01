@@ -29,6 +29,7 @@
   vertical-align: middle;
   width: 0;
   white-space: nowrap;
+  padding: 4px;
 }
 
 table {
@@ -135,9 +136,15 @@ tr:hover {
 }
 
 .tableOfTemplates {
-  tr {
+  .trActive {
+    background-color: rgba(225, 186, 188, 0.50);
+    border-radius: 4px;
+  }
+
+  .th-l {
     &:hover {
       cursor: pointer;
+      font-weight: bold;
     }
   }
 

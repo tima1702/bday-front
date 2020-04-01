@@ -19,7 +19,14 @@ button {
   }
 
   &[disabled] {
-    background-color: #ff0002;
+    background-color: rgba(44, 44, 44, 0.28);
+    color: rgba(44, 44, 44, 0.71);
+    border-color: rgba(44, 44, 44, 0.71);
+
+    &:hover {
+      background-color: rgba(44, 44, 44, 0.28);
+      border-color: rgba(44, 44, 44, 0.71);
+    }
   }
 }
 
@@ -122,11 +129,12 @@ button {
   cursor: pointer;
   text-align: center;
   border-radius: 50%;
-  padding: 2px 6px 2px 6px ;
+  padding: 2px 6px 2px 6px;
   background-color: transparent;
   color: #ff0600;
   border: none;
   font-weight: bold;
+
   &:hover {
     background: #ff0600;
     color: white;

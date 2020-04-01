@@ -8,7 +8,7 @@ import {
     calendarDeleteTemplate,
     calendarEditTemplate,
     calendarFetchListOfTemplates,
-    calendarFetchTemplate
+    calendarFetchTemplate, calendarFetchTemplateWithBday
 } from "../../Reducers/templates";
 import ShowTemplate from "../../components/ShowTemplate";
 import FormTemplate from "../../components/FormTemplate";
@@ -51,6 +51,14 @@ export default function () {
             setCurrentId(id);
             setShowModal(true);
         });
+    }, []);
+
+    const handleGetTemplateWithBday = useCallback((templateId,bdayId) => {
+        dispatch(calendarFetchTemplateWithBday(templateId,bdayId)).then((res) => {
+           console.log(res);
+        }).catch(() => {
+            //обработать возможные ошибки
+        })
     }, []);
 
     const handleEditTemplate = useCallback((id, data) => {
@@ -105,6 +113,7 @@ export default function () {
                         name: 'number',
                         className: 'td-sm',
                         children: index + 1,
+                        classNameRow: (currentId===item.id)&&(collapseTableOfTemplates)?'trActive':'',
                     },
                     {
                         name: 'name',
@@ -147,7 +156,7 @@ export default function () {
     return (
         <div>
             <Modal show={showModal} header={'Add template'}
-                   content={<FormTemplate editData={template.payload} onSave=
+                   content={<FormTemplate edit={true} editData={template.payload} onSave=
                        {(data) => {
                            handleEditTemplate(currentId, data);
                            setShowModal(false);

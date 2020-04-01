@@ -22,13 +22,19 @@ export const calendarEditTemplate = createAction('service/templates/edit', (id,d
     payload: CalendarService.editTemplate(id,data),
 }));
 
+export const calendarFetchTemplateWithBday = createAction('service/templates/fetchTemplateWithBday', (templateId,bdayId) => ({
+    payload: CalendarService.getTemplateWithBday(templateId,bdayId),
+}));
+
 const initState = {
     list: getDefaultState(),
     add: getDefaultState(),
     delete: getDefaultState(),
     template: getDefaultState(),
     edit: getDefaultState(),
+    templateWithBday: getDefaultState(),
 };
+
 
 export default createReducer(initState, {
     ...getDefaultHandler(calendarFetchListOfTemplates, 'list'),
@@ -36,4 +42,5 @@ export default createReducer(initState, {
     ...getDefaultHandler(calendarDeleteTemplate, 'delete'),
     ...getDefaultHandler(calendarFetchTemplate, 'template'),
     ...getDefaultHandler(calendarEditTemplate, 'edit'),
+    ...getDefaultHandler(calendarFetchTemplateWithBday, 'templateWithBday'),
 });

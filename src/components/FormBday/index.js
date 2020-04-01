@@ -1,17 +1,23 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import './style.scss'
 import Button from "../Button";
 import Input from "../Input";
 import ErrorBlock from "../Error";
 import moment from "moment";
+import {compareObj} from "../../Utils/objects";
 
-function FormBday({editData, onSave}) {
+function FormBday({editData, onSave, edit}) {
     const [data, setData] = useState(editData);
     const [err, setErr] = useState({
         show: false,
         firstName: '',
         lastName: '',
         date: '',
+    });
+
+    useEffect(() => {
+        //console.log(data.date.length);
+       // console.log(data.date);
     });
 
     return (
@@ -48,10 +54,12 @@ function FormBday({editData, onSave}) {
             <Button onClick={() => {
                 //валидация и только потом закрытие формы и др
                 setErr(validation(data));
-                if(!validation(data).show){onSave(data);}
+                if (!validation(data).show) {
+                    onSave(data);
+                }
 
             }}
-                    // disabled={err.show ? ('disabled') : ('')}
+                    disabled={(compareObj(editData, data) && (edit)&&(data.date.length===0)) ? ('disabled') : ('')}
                     className="btnSave">Save</Button></>
     );
 }

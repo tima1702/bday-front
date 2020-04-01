@@ -4,9 +4,10 @@ import Button from "../Button";
 import TextArea from "../TextArea";
 import Input from "../Input";
 import ErrorBlock from "../Error";
+import {compareObj} from "../../Utils/objects";
 
 
-function FormTemplate({editData, onSave}) {
+function FormTemplate({editData, onSave, edit}) {//если edit=true - Значит форма открыта для редактирования
     const [data, setData] = useState(editData);
     const [err, setErr] = useState({
         show: false,
@@ -18,7 +19,7 @@ function FormTemplate({editData, onSave}) {
     const [blocks, setBlocks] = useState((JSON.stringify(data.blocks) === '[]') ? '' : JSON.stringify(data.blocks));
 
     useEffect(() => {
-        //console.log(data);
+
     });
 
     function clickHelp(e) {
@@ -72,7 +73,7 @@ function FormTemplate({editData, onSave}) {
                     onSave({...data, blocks: [].concat(per.blocks)});
                 }
             }}
-                // disabled={err.show ? ('disabled') : ('')}
+                    disabled={(compareObj(editData, data) && (edit) && (blocks === JSON.stringify(editData.blocks))) ? ('disabled') : ('')}
                     className="btnSave">Save</Button></>
     );
 }
@@ -94,8 +95,11 @@ function validation(data, blocks, setData) {
 
     try {
         let per = JSON.parse(blocks);
+        if (typeof per['blocks'] === "undefined") {//если поля blocks нет в объекте
+            err.blocks = 'JSON format: {"blocks":[{},{},...,{}]}';
+        }
+
         setData({...data, blocks: [].concat(per.blocks)});
-        //setData({...data, blocks: [].concat(per.blocks)});
     } catch (e) {
         err.blocks = 'JSON error';// + e;
         try {
@@ -108,3 +112,4 @@ function validation(data, blocks, setData) {
     err.show = Boolean(err.title.length + err.text.length + err.blocks.length + err.attachments.length);
     return err;
 }
+

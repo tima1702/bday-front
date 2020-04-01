@@ -19,21 +19,21 @@ export default function () {
 
     let location = useLocation();
     const dispatch = useDispatch();
-    console.log('test');
+
     const handleAddBday = useCallback((data) => {
         dispatch(calendarAddBday(data)).then((resp) => {
             //выводим сообщение
             if (resp.ok) {
                 setSnackBarContent('Birthday successfully added');
             } else {
-                setSnackBarContent('Error: ' + resp.statusText);
+                setSnackBarContent('Error: '+resp.statusText);
             }
             setShowSnackBar(true);
             setTimeout(() => setShowSnackBar(false), 3000);
             dispatch(calendarFetchListOfBdays());
 
         }).catch((err) => {
-            setSnackBarContent('Error: ' + err);
+            setSnackBarContent('Error: '+err);
             setShowSnackBar(true);
             setTimeout(() => setShowSnackBar(false), 3000);
             //console.log('err: '+err);
@@ -46,7 +46,7 @@ export default function () {
             if (resp.ok) {
                 setSnackBarContent('Template successfully added');
             } else {
-                setSnackBarContent('Error: ' + resp.statusText);
+                setSnackBarContent('Error: '+resp.statusText);
             }
 
             setShowSnackBar(true);

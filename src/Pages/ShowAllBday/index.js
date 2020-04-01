@@ -195,7 +195,7 @@ function ShowAllBdayPage() {
                </>}
                toClose={() => setShowSimpleModal(false)}/>
         <Modal show={showModal} header={'Edit birthday'}
-               content={<FormBday onSave={(data) => {
+               content={<FormBday edit={true} onSave={(data) => {
                    handleEdit(data.id, {
                        firstName: data.firstName,
                        lastName: data.lastName,

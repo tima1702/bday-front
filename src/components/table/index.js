@@ -29,7 +29,8 @@ function Table({
             modifiedContent = content.map((item, i) => (
                 <tr key={'content' + i}>
                     {item.map((itemChild, j) => (
-                        <td onClick={itemChild.onClickRow} key={'content' + i + '.' + j} colSpan={itemChild.colSpan} className={itemChild.className}>
+                        <td onClick={itemChild.onClickRow} key={'content' + i + '.' + j} colSpan={itemChild.colSpan}
+                            className={itemChild.className+' '+itemChild.classNameRow}>
                             {itemChild.children}
                         </td>
                     ))}
