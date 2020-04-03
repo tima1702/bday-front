@@ -1,5 +1,5 @@
 .divShowTemplate {
-  padding: 5px;
+  padding: 5px 5px 5px 15px;
 
   & b {
     font-weight: normal;
@@ -15,7 +15,7 @@
     overflow: auto;
     width: 100%;
     min-height: 100px;
-    max-height: calc(100vh - 256px);
+    max-height: calc(100vh - 290px);
     //background: #e1babc;
     border-collapse: collapse;
     border: 2px;

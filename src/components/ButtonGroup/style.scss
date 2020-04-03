@@ -1,0 +1,40 @@
+.btn-group .button {
+  background-color: rgba(0, 0, 0, 0);
+  border: none;
+  color: #000000;
+  padding: 8px 18px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  cursor: pointer;
+  float: left;
+  margin: 0;
+  border-radius: 0;
+
+}
+
+.btn-group .button:hover {
+  background-color: darkgray;
+}
+
+.btn-group{
+  background-color: lightgrey;
+  width: 100%;
+  display: inline-block;
+  //border-radius: 0px 8px 8px 0px;
+}
+.btn-group-active-btn{
+  background-color: darkgray !important;
+}
+
+.button-close{
+  padding: 5px 18px !important;
+  float: right !important;
+  font-family: sans-serif;
+  font-size: 24px !important;
+  font-weight: 700;
+  line-height: 1;
+  text-shadow: 0 1px 0 #fff;
+  opacity: .5;
+}

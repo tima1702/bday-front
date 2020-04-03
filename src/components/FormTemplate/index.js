@@ -70,6 +70,9 @@ function FormTemplate({editData, onSave, edit}) {//если edit=true - Знач
                 setErr(validation(data, blocks, setData));
                 if (!validation(data, blocks, setData).show) {
                     let per = JSON.parse(blocks);
+                    if (typeof per['blocks'] === "undefined") {//если поля blocks нет в объекте
+                        per = {"blocks": per};
+                    }
                     onSave({...data, blocks: [].concat(per.blocks)});
                 }
             }}
@@ -96,9 +99,10 @@ function validation(data, blocks, setData) {
     try {
         let per = JSON.parse(blocks);
         if (typeof per['blocks'] === "undefined") {//если поля blocks нет в объекте
-            err.blocks = 'JSON format: {"blocks":[{},{},...,{}]}';
+            //err.blocks = 'JSON format: {"blocks":[{},{},...,{}]}';
+            per = {"blocks": per};
         }
-
+        console.log(per);
         setData({...data, blocks: [].concat(per.blocks)});
     } catch (e) {
         err.blocks = 'JSON error';// + e;

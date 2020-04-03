@@ -99,7 +99,6 @@ button {
   // border-bottom: 1px dotted black; /* Если вы хотите многоточия под наведением курсора текстом */
   &:hover {
     cursor: pointer;
-
     .tooltiptext {
       visibility: visible;
     }

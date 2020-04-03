@@ -48,7 +48,7 @@ function ShowAllBdayPage() {
 
             dispatch(calendarFetchListOfBdays());
         }).catch(() => {
-            //обработать возможные ошибки
+            //обработать ошибки
         })
     }, []);
 
