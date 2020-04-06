@@ -11,24 +11,21 @@
   background-color: rgba(0, 0, 0, 0.62);
   overflow-y: auto;
 }
-/* при отображении модального окна */
-.modal:target {
-  opacity: 1; /* делаем окно видимым */
-  pointer-events: auto; /* элемент видим для событий мыши */
-  overflow-y: auto; /* добавляем прокрутку по y, когда элемент не помещается на страницу */
-}
+
 /* ширина модального окна и его отступы от экрана */
 .modal-dialog {
   position: relative;
   width: auto;
   margin: 10px;
 }
+
 @media (min-width: 576px) {
   .modal-dialog {
     max-width: 500px;
     margin: 30px auto; /* для отображения модального окна по центру */
   }
 }
+
 /* свойства для блока, содержащего контент модального окна */
 .modal-content {
   position: relative;
@@ -44,16 +41,18 @@
   background-color: #fff;
   -webkit-background-clip: padding-box;
   background-clip: padding-box;
-  border: 1px solid rgba(0,0,0,.2);
+  border: 1px solid rgba(0, 0, 0, .2);
   border-radius: .3rem;
   outline: 0;
 }
+
 @media (min-width: 768px) {
   .modal-content {
-    -webkit-box-shadow: 0 5px 15px rgba(0,0,0,.5);
-    box-shadow: 0 5px 15px rgba(0,0,0,.5);
+    -webkit-box-shadow: 0 5px 15px rgba(0, 0, 0, .5);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, .5);
   }
 }
+
 /* свойства для заголовка модального окна */
 .modal-header {
   display: -webkit-box;
@@ -71,6 +70,7 @@
   padding: 15px;
   border-bottom: 1px solid #eceeef;
 }
+
 .modal-title {
   margin-top: 0;
   margin-bottom: 0;

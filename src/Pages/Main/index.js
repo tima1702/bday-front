@@ -1,16 +1,19 @@
 import React, {useCallback, useEffect, useState} from 'react';
 import {shallowEqual, useDispatch, useSelector} from 'react-redux';
-import {calendarFetchListOfBdays, calendarDeleteBday, calendarEditBday} from '../../Reducers/calendar';
 import moment from "moment";
-import Calendar from "../../components/calendar";
+
 import './style.scss';
+
+import {calendarFetchListOfBdays, calendarDeleteBday, calendarEditBday} from '../../Reducers/calendar';
+
+import Calendar from "../../components/calendar";
 import Table from "../../components/table";
 import Button from "../../components/Button";
 import FormBday from "../../components/FormBday";
 import Modal from "../../components/Modal";
 import SnackBar from "../../components/SnackBar";
 
-function CalendarPage() {
+function MainPage() {
     const {payload} = useSelector(state => state.calendar.list, shallowEqual);
     const isLoading = useSelector(state => state.calendar.list.isLoading, shallowEqual);
     const dispatch = useDispatch();
@@ -54,7 +57,7 @@ function CalendarPage() {
     }, []);
 
     //формирование массива "важных дат" для календаря
-    let importantDates = [];
+    let importantDates;
     try {
         importantDates = payload[dateForCalendar.format('MMMM')].map((item) => {
             return item['day'];
@@ -75,7 +78,7 @@ function CalendarPage() {
                                               date: ''
                                           })
                                       }}/>,
-                    <Button key={'ButtonDelete' + subIndex} children={'Delete'} className={"btnDelete"}
+                    <Button key={'ButtonDelete' + subIndex} children={'Delete'} className={"btn-delete"}
                             onClick={() => {
                                 setShowSimpleModal(true);
                                 setCurrentId(subItem['id']);
@@ -104,11 +107,8 @@ function CalendarPage() {
         importantDates = [];
     }
 
-    //console.log('..........', payload);
-    //return <div>CalendarPage{JSON.stringify(payload)}</div>;
-    return <
-        div>
-        < Modal
+    return <div>
+        <Modal
             show={showModal}
             header={'Edit birthday'}
             content={
@@ -126,14 +126,14 @@ function CalendarPage() {
         />
         <Modal show={showSimpleModal} header={'Delete'}
                content={<>You sure?
-                   <Button className={'yesButton'}
+                   <Button className={'btn-modal-yes'}
                            children={'No'}
                            onClick={() => setShowSimpleModal(false)}/>
-                   <Button className={'yesButton'} children={'Yes'}
+                   <Button className={'btn-modal-yes'} children={'Yes'}
                            onClick={() => handleDelete(currentId)}/>
                </>}
                toClose={() => setShowSimpleModal(false)}/>
-        < SnackBar
+        <SnackBar
             show={showSnackBar}
             content={snackBarContent}
         />
@@ -144,17 +144,17 @@ function CalendarPage() {
                   clickNextButton={() => setDateForCalendar(moment(dateForCalendar.add(1, 'months').format('DD/MM/YYYY'), 'DD/MM/YYYY'))}/>
         <br/>
         <Table
-            classNameTable = {tablePattern.classNameTable}
-            classNameTableHead = {tablePattern.classNameTableHead}
-            header = {tablePattern.header}
-            content = {tablePattern.content}
-            isLoading = {isLoading}
-            />
+            classNameTable={tablePattern.classNameTable}
+            classNameTableHead={tablePattern.classNameTableHead}
+            header={tablePattern.header}
+            content={tablePattern.content}
+            isLoading={isLoading}
+        />
 
     </div>;
 }
 
-export default CalendarPage;
+export default MainPage;
 
 let tablePattern = {
     classNameTable: '',

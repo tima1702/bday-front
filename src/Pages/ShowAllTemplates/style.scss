@@ -1,4 +1,4 @@
-.divTableOfTemplates {
+.div-panel-left {
   width: 30%;
   min-height: calc(100vh - 50px);
   border-radius: 4px 4px 4px 4px;
@@ -7,12 +7,11 @@
   overflow: auto;
 }
 
-.divRightPanel {
-  //padding: 5px 5px 5px 15px;
-  padding: 4px 0px 0px 0px;
+.div-panel-right {
+  padding: 4px 0 0 0;
   width: 70%;
   vertical-align: top;
-  min-height: calc(100vh - 48px);
+  min-height: calc(100vh - 50px);
   background-color: rgba(0, 0, 0, 0);
   display: inline-block;
 }

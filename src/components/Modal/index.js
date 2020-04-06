@@ -24,7 +24,7 @@ function Modal({show, toClose, content, header}) {
                     <div className="modal-content">
                         <div className="modal-header">
                             <h3 className="modal-title">{header}</h3>
-                            <Button onClick={toClose} className="close">×</Button>
+                            <Button onClick={toClose} className="btn-close">×</Button>
                         </div>
                         <div className="modal-body">
                             {content}

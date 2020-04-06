@@ -10,7 +10,7 @@ function ShowTemplate({payload}) {
             + encodeURIComponent(JSON.stringify(payload.blocks)));
     }
 
-    return (<div className={'divShowTemplate'}>
+    return (<div className={'div-showTemplate'}>
 
         <p><b>TITLE:</b></p>
         <blockquote>
@@ -20,8 +20,8 @@ function ShowTemplate({payload}) {
         <blockquote>
             <p>{payload.text}</p>
         </blockquote>
-        <p><b>BLOCKS:</b> <Button onClick={clickGO} className="btnHelp tooltip">?
-            <span className="tooltiptext">View template with Slack Block Kit Builder</span></Button>
+        <p><b>BLOCKS:</b> <Button onClick={clickGO} className="btn-help tooltip">?
+            <span className="tooltip-text">View template with Slack Block Kit Builder</span></Button>
         </p>
             <div>{JSON.stringify(payload.blocks)}</div>
 

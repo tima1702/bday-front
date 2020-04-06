@@ -9,7 +9,7 @@ function ListOfBdays({onClickGo}) {
     const dispatch = useDispatch();
     const {payload} = useSelector(state => state.calendar.list, shallowEqual);
     const isLoading = useSelector(state => state.calendar.list.isLoading, shallowEqual);
-    const [currentId, setCurrentId] = useState(null);//айди USER, с которым в данный момент работает пользователь
+    const [currentId, setCurrentId] = useState(null);//айди bday, с которым в данный момент работает пользователь
 
     useEffect(() => {
         dispatch(calendarFetchListOfBdays());
@@ -40,9 +40,9 @@ function ListOfBdays({onClickGo}) {
         }
     }
     return (
-        <div className={'tableOfBdays'}>
+        <div className={'div-tableOfBdays'}>
             {buttonGo}
-            <p className={'selectUser'}><b>Select user:</b></p>
+            <p className={'p-selectUser'}>Select user:</p>
             <Table
                 classNameTable={tablePattern.classNameTable} classNameTableHead={tablePattern.classNameTableHead}
                 header={tablePattern.header} content={tablePattern.content}
@@ -55,8 +55,6 @@ export default ListOfBdays;
 let tablePattern = {
     classNameTable: '',
     classNameTableHead: '',
-    header: [
-        //{name: 'name', alias: 'Name', className: 'heading'},
-    ],
+    header: [],
     content: []
 };

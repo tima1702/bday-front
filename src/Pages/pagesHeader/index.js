@@ -1,15 +1,18 @@
 import React, {useCallback, useState} from 'react';
 import {Link, useLocation,} from 'react-router-dom';
+import {useDispatch} from "react-redux";
+import moment from "moment";
+
 import './style.scss';
+
+import {calendarAddTemplate, calendarFetchListOfTemplates} from "../../Reducers/templates";
+import {calendarAddBday, calendarFetchListOfBdays} from "../../Reducers/calendar";
+
 import imgBday from '../../image/iconBday.png';
 import Modal from "../../components/Modal";
 import FormBday from "../../components/FormBday";
-import {useDispatch} from "react-redux";
-import {calendarAddBday, calendarFetchListOfBdays} from "../../Reducers/calendar";
-import moment from "moment";
 import SnackBar from "../../components/SnackBar";
 import FormTemplate from "../../components/FormTemplate";
-import {calendarAddTemplate, calendarFetchListOfTemplates} from "../../Reducers/templates";
 
 export default function () {
     const [showModalBday, setShowModalBday] = useState(false);
@@ -36,7 +39,7 @@ export default function () {
             setSnackBarContent('Error: '+err);
             setShowSnackBar(true);
             setTimeout(() => setShowSnackBar(false), 3000);
-            //console.log('err: '+err);
+
             //обработать возможные ошибки
         })
     }, []);

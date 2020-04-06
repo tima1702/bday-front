@@ -3,7 +3,7 @@ import './style.scss'
 
 function ErrorBlock({content}) {
     return content.length?(
-        <div className={'error'}>
+        <div className={'div-error'}>
             {content}
         </div>
     ):null;

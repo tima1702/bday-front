@@ -1,4 +1,4 @@
-.btn-group .button {
+.div-button-group .btn-button-group {
   background-color: rgba(0, 0, 0, 0);
   border: none;
   color: #000000;
@@ -11,24 +11,23 @@
   float: left;
   margin: 0;
   border-radius: 0;
-
 }
 
-.btn-group .button:hover {
+.div-button-group .btn-button-group:hover {
   background-color: darkgray;
 }
 
-.btn-group{
+.div-button-group {
   background-color: lightgrey;
   width: 100%;
   display: inline-block;
-  //border-radius: 0px 8px 8px 0px;
 }
-.btn-group-active-btn{
+
+.btn-active-button-group {
   background-color: darkgray !important;
 }
 
-.button-close{
+.btn-close-button-group {
   padding: 5px 18px !important;
   float: right !important;
   font-family: sans-serif;

@@ -1,17 +1,14 @@
-.selectUser {
+.p-selectUser {
   margin: 0;
   padding: 10px 10px 10px 25px;
-
-  & b {
-    font-weight: normal;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    color: #894641;
-    font-size: 16px;
-  }
+  font-weight: normal;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: #894641;
+  font-size: 16px;
 }
 
-.tableOfBdays {
+.div-tableOfBdays {
   padding: 5px;
 
   .th-l {
@@ -31,7 +28,8 @@
 .button-go {
   float: right;
   padding: 5px;
-  &:hover{
+
+  &:hover {
     cursor: pointer;
   }
 }

@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import './style.scss'
 import Button from "../Button";
 import Input from "../Input";
@@ -15,14 +15,9 @@ function FormBday({editData, onSave, edit}) {
         date: '',
     });
 
-    useEffect(() => {
-        //console.log(data.date.length);
-       // console.log(data.date);
-    });
-
     return (
         <>
-            <form className={'formAddBday'}>
+            <form className={'form-addBday'}>
                 <label>First Name<ErrorBlock content={err.firstName}/>
                     <Input
                         placeholder={'Enter first name..'}
@@ -59,8 +54,8 @@ function FormBday({editData, onSave, edit}) {
                 }
 
             }}
-                    disabled={(compareObj(editData, data) && (edit)&&(data.date.length===0)) ? ('disabled') : ('')}
-                    className="btnSave">Save</Button></>
+                    disabled={(compareObj(editData, data) && (edit) && (data.date.length === 0)) ? ('disabled') : ('')}
+                    className="btn-save">Save</Button></>
     );
 }
 
@@ -77,7 +72,7 @@ function validation(data) {
     const reg = new RegExp('^[a-zA-Zа-яА-Я-]{2,30}$');
     err.firstName = reg.test(data.firstName) ? '' : 'incorrect value';
     err.lastName = reg.test(data.lastName) ? '' : 'incorrect value';
-    //err.date = /^\d{1,2}\/\d{1,2}\/\d{4}$/.test(data.date) ? '' : 'incorrect value (date format: DD/MM/YYYY)';
+
     if (/^\d{1,2}\/\d{1,2}\/\d{4}$/.test(data.date)) {
         if ((moment(data.date + ' +0000', 'DD-MM-YYYY Z').unix() > 0) && (moment(data.date + ' +0000', 'DD-MM-YYYY Z').unix() < 2147483648)) {
             err.date = '';
@@ -92,7 +87,6 @@ function validation(data) {
     err.lastName = (data.lastName.length < 1) ? 'the field cannot be empty!' : err.lastName;
     err.date = (data.date.length < 1) ? 'the field cannot be empty!' : err.date;
 
-    // incorrect value
     err.show = Boolean(err.firstName.length + err.lastName.length + err.date.length);
     return err;
 }

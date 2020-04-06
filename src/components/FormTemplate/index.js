@@ -29,7 +29,7 @@ function FormTemplate({editData, onSave, edit}) {//если edit=true - Знач
 
     return (
         <>
-            <form className={'formAddTemplate'}>
+            <form className={'form-addTemplate'}>
                 <label>Title<ErrorBlock content={err.title}/>
                     <Input
                         placeholder={'Enter template name..'}
@@ -48,13 +48,13 @@ function FormTemplate({editData, onSave, edit}) {//если edit=true - Знач
                             setData({...data, text: e.target.value});
                             //setErr(validation({...data, text: e.target.value}, blocks, setData));
                         }}/>
-                </label><Button onClick={clickHelp} className="btnHelp tooltip">?
+                </label><Button onClick={clickHelp} className="btn-help tooltip">?
                 <span
-                    className="tooltiptext">open page in new tab - "https://api.slack.com/tools/block-kit-builder"</span></Button>
+                    className="tooltip-text">open page in new tab - "https://api.slack.com/tools/block-kit-builder"</span></Button>
                 <label>Blocks
                     <ErrorBlock content={err.blocks}/> {/*проверять на json*/}
                     <TextArea
-                        className={'bigTextarea'}
+                        className={'textarea-forJSON'}
                         placeholder={'Insert JSON from "SLACK Block Kit Builder"'}
                         value={blocks}
                         handleChange={(e) => {
@@ -77,7 +77,7 @@ function FormTemplate({editData, onSave, edit}) {//если edit=true - Знач
                 }
             }}
                     disabled={(compareObj(editData, data) && (edit) && (blocks === JSON.stringify(editData.blocks))) ? ('disabled') : ('')}
-                    className="btnSave">Save</Button></>
+                    className="btn-save">Save</Button></>
     );
 }
 
@@ -102,7 +102,6 @@ function validation(data, blocks, setData) {
             //err.blocks = 'JSON format: {"blocks":[{},{},...,{}]}';
             per = {"blocks": per};
         }
-        console.log(per);
         setData({...data, blocks: [].concat(per.blocks)});
     } catch (e) {
         err.blocks = 'JSON error';// + e;

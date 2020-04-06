@@ -1,15 +1,18 @@
 import React, {useCallback, useEffect, useState} from 'react';
 import {shallowEqual, useDispatch, useSelector} from 'react-redux';
+
 import './style.scss';
-import Table from "../../components/table";
-import Button from "../../components/Button";
-import Modal from "../../components/Modal";
+
 import {
     calendarDeleteTemplate,
     calendarEditTemplate,
     calendarFetchListOfTemplates,
     calendarFetchTemplate, calendarFetchTemplateWithBday
 } from "../../Reducers/templates";
+
+import Table from "../../components/table";
+import Button from "../../components/Button";
+import Modal from "../../components/Modal";
 import ShowTemplate from "../../components/ShowTemplate";
 import FormTemplate from "../../components/FormTemplate";
 import SnackBar from "../../components/SnackBar";
@@ -33,10 +36,10 @@ export default function () {
     const [activeButton, setActiveButton] = useState(show);
 
     let buttonGroup = {
-        className: 'btn-group',
+        className: 'div-button-group',
         buttons: [
             {
-                className: 'button',
+                className: 'btn-button-group',
                 children: show,
                 onClick: () => {
                     setActiveButton(show);
@@ -45,41 +48,38 @@ export default function () {
                 disabled: false,
             },
             {
-                className: 'button',
+                className: 'btn-button-group',
                 children: edit,
                 onClick: () => {
-                    //setActiveButton(edit);
                     setShowModal(true);
                 },
                 active: (activeButton === edit),
                 disabled: false,
             },
             {
-                className: 'button',
+                className: 'btn-button-group',
                 children: del,
                 onClick: () => {
-                    //setActiveButton(del);
                     setShowSimpleModal(true);
                 },
                 active: (activeButton === del),
                 disabled: false,
             },
             {
-                className: 'button',
+                className: 'btn-button-group',
                 children: open,
                 onClick: () => {
                     setActiveButton(open);
                 },
-                active: (activeButton === open),
+                active: ((activeButton===open)||(activeButton===openTemplateWithBday)),
                 disabled: false,
             },
-            { //<Button onClick={() => setCollapseTableOfTemplates(false)} className="close">×</Button>
-                className: 'button button-close',
+            {
+                className: 'btn-button-group btn-close-button-group',
                 children: '×',
                 onClick: () => {
                     setCollapseTableOfTemplates(false);
                 },
-                active: (activeButton === show),
                 disabled: false,
             },
         ]
@@ -104,17 +104,9 @@ export default function () {
         dispatch(calendarFetchTemplate(id));
     }, []);
 
-    const handleOpenModalEditTemplate = useCallback((id) => {
-        dispatch(calendarFetchTemplate(id)).then(() => {
-            setCurrentId(id);
-            setShowModal(true);
-        });
-    }, []);
-
     const handleGetTemplateWithBday = useCallback((templateId, bdayId) => {
-        dispatch(calendarFetchTemplateWithBday(templateId, bdayId)).then((res) => {
-            //console.log(res);
-            setActiveButton(openTemplateWithBday);
+        dispatch(calendarFetchTemplateWithBday(templateId, bdayId)).then(() => {
+
         }).catch(() => {
             //обработать возможные ошибки
         })
@@ -146,7 +138,7 @@ export default function () {
             payload.forEach((item, index) => {
                 let action = [<Button key={'ButtonShow' + index} children={'Show'} className={"btnEdit"}
                                       onClick={() => {
-                                          setActiveButton('Show');
+                                          setActiveButton(show);
                                           if (!collapseTableOfTemplates) (setCollapseTableOfTemplates(true));
                                           if (currentId === item.id) {
                                               setCollapseTableOfTemplates(!collapseTableOfTemplates);
@@ -155,12 +147,7 @@ export default function () {
                                           setCurrentId(item.id);
                                           handleGetTemplate(item.id);
                                       }}/>,
-                    <Button key={'ButtonEdit' + index} children={'Edit'} className={"btnEdit"}
-                            onClick={() => {
-                                handleOpenModalEditTemplate(item.id);
-
-                            }}/>,
-                    <Button key={'ButtonDelete' + index} children={'X'} className={"btnDeleteIcon"}
+                    <Button key={'ButtonDelete' + index} children={'×'} className={"btn-delete-x"}
                             onClick={() => {
                                 setCurrentId(item.id);
                                 setShowSimpleModal(true);
@@ -181,7 +168,7 @@ export default function () {
                         children: item.title,
                         className: 'th-l',
                         onClickRow: () => {
-                            setActiveButton('Show');
+                            setActiveButton(show);
                             if (!collapseTableOfTemplates) {
                                 setCollapseTableOfTemplates(true);
                             }
@@ -206,19 +193,16 @@ export default function () {
 
     let rightPanel;
     if (collapseTableOfTemplates) {//если наадо показывать правую часть экрана
-
-        buttonGroup.buttons.forEach((item) => {
-            //console.log(item.children+' = '+button);
-            item.active = (item.children === activeButton);
-        });
         let tabContent;
         switch (activeButton) {
             case openTemplateWithBday:
                 tabContent = (templateWithBday.isLoading ? <Spinner className='loader2'/> :
-                    <ShowTemplate payload={templateWithBday.payload}/>);
+                    [<Button key={'buttonBack'} className={'button-go'} children={'<< Back'} onClick={()=>setActiveButton(open)}/>
+                    ,<ShowTemplate key={'ShowBack'} payload={templateWithBday.payload}/>]);
                 break;
             case open:
                 tabContent = (<ListOfBdays onClickGo={(id) => {
+                    setActiveButton(openTemplateWithBday);
                     handleGetTemplateWithBday(currentId, id);
                 }}/>);
                 break;
@@ -229,7 +213,7 @@ export default function () {
                 break;
         }
 
-        rightPanel = (<div className={'divRightPanel'}>
+        rightPanel = (<div className={'div-panel-right'}>
             <ButtonGroup buttonGroup={buttonGroup}/>
             {tabContent}
         </div>);
@@ -249,16 +233,16 @@ export default function () {
 
             <Modal show={showSimpleModal} header={'Delete'}
                    content={<>You sure?
-                       <Button className={'yesButton'}
+                       <Button className={'btn-modal-yes'}
                                children={'No'}
                                onClick={() => setShowSimpleModal(false)}/>
-                       <Button className={'yesButton'} children={'Yes'}
+                       <Button className={'btn-modal-yes'} children={'Yes'}
                                onClick={() => handleDelete(currentId)}/>
                    </>}
                    toClose={() => setShowSimpleModal(false)}/>
             <SnackBar show={showSnackBar} content={snackBarContent}/>
 
-            <div className={(collapseTableOfTemplates) ? 'divTableOfTemplates' : ''}><Table
+            <div className={(collapseTableOfTemplates) ? 'div-panel-left' : ''}><Table
                 classNameTable={tablePattern.classNameTable} classNameTableHead={tablePattern.classNameTableHead}
                 header={tablePattern.header} content={tablePattern.content}
                 isLoading={isLoading}/></div>
@@ -267,6 +251,7 @@ export default function () {
     );
 
 }
+
 const show = 'Show';
 const edit = 'Edit';
 const del = 'Delete';
@@ -274,7 +259,7 @@ const open = 'Open with Bday';
 const openTemplateWithBday = 'openTemplateWithBday';
 
 let tablePattern = {
-    classNameTable: 'tableOfTemplates',
+    classNameTable: 'table-ofTemplates',
     classNameTableHead: '',
     header: [
         {name: 'number', alias: '№', className: 'heading'},

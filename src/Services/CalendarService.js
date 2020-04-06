@@ -11,9 +11,6 @@ import {
 class CalendarService {
     fetchListOfBdays() {
         return getBdaysList().then(res => res.data);
-        // return new Promise(resolve => {
-        //     setTimeout(resolve, 3000, fakeData);
-        // });
     }
 
     deleteBday(id) {
