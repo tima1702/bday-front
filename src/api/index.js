@@ -80,3 +80,10 @@ export function editTemplate(id, data) {
     }).then(res => res
     ).catch(err => err);
 }
+
+export function getTemplateWithBday(templateId,bdayId) {
+    return fetch(defaultPath + '/templates/' + templateId+'/'+bdayId, {
+        method: 'GET',
+    }).then(res => res.json()
+    ).catch(err => err);
+}

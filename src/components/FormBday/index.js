@@ -4,8 +4,9 @@ import Button from "../Button";
 import Input from "../Input";
 import ErrorBlock from "../Error";
 import moment from "moment";
+import {compareObj} from "../../Utils/objects";
 
-function FormBday({editData, onSave}) {
+function FormBday({editData, onSave, edit}) {
     const [data, setData] = useState(editData);
     const [err, setErr] = useState({
         show: false,
@@ -16,7 +17,7 @@ function FormBday({editData, onSave}) {
 
     return (
         <>
-            <form className={'formAddBday'}>
+            <form className={'form-addBday'}>
                 <label>First Name<ErrorBlock content={err.firstName}/>
                     <Input
                         placeholder={'Enter first name..'}
@@ -48,11 +49,13 @@ function FormBday({editData, onSave}) {
             <Button onClick={() => {
                 //валидация и только потом закрытие формы и др
                 setErr(validation(data));
-                if(!validation(data).show){onSave(data);}
+                if (!validation(data).show) {
+                    onSave(data);
+                }
 
             }}
-                    // disabled={err.show ? ('disabled') : ('')}
-                    className="btnSave">Save</Button></>
+                    disabled={(compareObj(editData, data) && (edit) && (data.date.length === 0)) ? ('disabled') : ('')}
+                    className="btn-save">Save</Button></>
     );
 }
 
@@ -69,7 +72,7 @@ function validation(data) {
     const reg = new RegExp('^[a-zA-Zа-яА-Я-]{2,30}$');
     err.firstName = reg.test(data.firstName) ? '' : 'incorrect value';
     err.lastName = reg.test(data.lastName) ? '' : 'incorrect value';
-    //err.date = /^\d{1,2}\/\d{1,2}\/\d{4}$/.test(data.date) ? '' : 'incorrect value (date format: DD/MM/YYYY)';
+
     if (/^\d{1,2}\/\d{1,2}\/\d{4}$/.test(data.date)) {
         if ((moment(data.date + ' +0000', 'DD-MM-YYYY Z').unix() > 0) && (moment(data.date + ' +0000', 'DD-MM-YYYY Z').unix() < 2147483648)) {
             err.date = '';
@@ -84,7 +87,6 @@ function validation(data) {
     err.lastName = (data.lastName.length < 1) ? 'the field cannot be empty!' : err.lastName;
     err.date = (data.date.length < 1) ? 'the field cannot be empty!' : err.date;
 
-    // incorrect value
     err.show = Boolean(err.firstName.length + err.lastName.length + err.date.length);
     return err;
 }

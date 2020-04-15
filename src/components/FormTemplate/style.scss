@@ -1,5 +1,5 @@
-.formAddTemplate {
-  input{
+.form-addTemplate {
+  input {
     width: 100%;
     padding: 12px 20px;
     margin: 8px 0;
@@ -15,7 +15,7 @@
     padding: 20px;
   }
 
-  textarea{
+  textarea {
     border: 1px solid #ccc;
     border-radius: 4px;
     resize: vertical;
@@ -23,7 +23,8 @@
     margin: 8px 0;
     min-height: 50px;
   }
-  .bigTextarea{
+
+  .textarea-forJSON {
     font-size: 10px;
     font-family: Courier New, monospace;
     height: 150px;

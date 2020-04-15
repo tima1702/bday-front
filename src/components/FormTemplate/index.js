@@ -4,9 +4,10 @@ import Button from "../Button";
 import TextArea from "../TextArea";
 import Input from "../Input";
 import ErrorBlock from "../Error";
+import {compareObj} from "../../Utils/objects";
 
 
-function FormTemplate({editData, onSave}) {
+function FormTemplate({editData, onSave, edit}) {//если edit=true - Значит форма открыта для редактирования
     const [data, setData] = useState(editData);
     const [err, setErr] = useState({
         show: false,
@@ -18,7 +19,7 @@ function FormTemplate({editData, onSave}) {
     const [blocks, setBlocks] = useState((JSON.stringify(data.blocks) === '[]') ? '' : JSON.stringify(data.blocks));
 
     useEffect(() => {
-        //console.log(data);
+
     });
 
     function clickHelp(e) {
@@ -28,7 +29,7 @@ function FormTemplate({editData, onSave}) {
 
     return (
         <>
-            <form className={'formAddTemplate'}>
+            <form className={'form-addTemplate'}>
                 <label>Title<ErrorBlock content={err.title}/>
                     <Input
                         placeholder={'Enter template name..'}
@@ -47,13 +48,13 @@ function FormTemplate({editData, onSave}) {
                             setData({...data, text: e.target.value});
                             //setErr(validation({...data, text: e.target.value}, blocks, setData));
                         }}/>
-                </label><Button onClick={clickHelp} className="btnHelp tooltip">?
+                </label><Button onClick={clickHelp} className="btn-help tooltip">?
                 <span
-                    className="tooltiptext">open page in new tab - "https://api.slack.com/tools/block-kit-builder"</span></Button>
+                    className="tooltip-text">open page in new tab - "https://api.slack.com/tools/block-kit-builder"</span></Button>
                 <label>Blocks
                     <ErrorBlock content={err.blocks}/> {/*проверять на json*/}
                     <TextArea
-                        className={'bigTextarea'}
+                        className={'textarea-forJSON'}
                         placeholder={'Insert JSON from "SLACK Block Kit Builder"'}
                         value={blocks}
                         handleChange={(e) => {
@@ -69,11 +70,14 @@ function FormTemplate({editData, onSave}) {
                 setErr(validation(data, blocks, setData));
                 if (!validation(data, blocks, setData).show) {
                     let per = JSON.parse(blocks);
+                    if (typeof per['blocks'] === "undefined") {//если поля blocks нет в объекте
+                        per = {"blocks": per};
+                    }
                     onSave({...data, blocks: [].concat(per.blocks)});
                 }
             }}
-                // disabled={err.show ? ('disabled') : ('')}
-                    className="btnSave">Save</Button></>
+                    disabled={(compareObj(editData, data) && (edit) && (blocks === JSON.stringify(editData.blocks))) ? ('disabled') : ('')}
+                    className="btn-save">Save</Button></>
     );
 }
 
@@ -94,8 +98,11 @@ function validation(data, blocks, setData) {
 
     try {
         let per = JSON.parse(blocks);
+        if (typeof per['blocks'] === "undefined") {//если поля blocks нет в объекте
+            //err.blocks = 'JSON format: {"blocks":[{},{},...,{}]}';
+            per = {"blocks": per};
+        }
         setData({...data, blocks: [].concat(per.blocks)});
-        //setData({...data, blocks: [].concat(per.blocks)});
     } catch (e) {
         err.blocks = 'JSON error';// + e;
         try {
@@ -108,3 +115,4 @@ function validation(data, blocks, setData) {
     err.show = Boolean(err.title.length + err.text.length + err.blocks.length + err.attachments.length);
     return err;
 }
+

@@ -1,11 +1,14 @@
 import React, {useCallback, useEffect, useState} from 'react';
 import {shallowEqual, useDispatch, useSelector} from 'react-redux';
-import {calendarDeleteBday, calendarFetchListOfBdays, calendarEditBday} from '../../Reducers/calendar';
+import moment from "moment";
+
 import './style.scss';
+
+import {calendarDeleteBday, calendarFetchListOfBdays, calendarEditBday} from '../../Reducers/calendar';
+
 import Table from "../../components/table";
 import Button from "../../components/Button";
 import FormBday from "../../components/FormBday";
-import moment from "moment";
 import Modal from "../../components/Modal";
 import SnackBar from "../../components/SnackBar";
 
@@ -48,7 +51,7 @@ function ShowAllBdayPage() {
 
             dispatch(calendarFetchListOfBdays());
         }).catch(() => {
-            //обработать возможные ошибки
+            //обработать ошибки
         })
     }, []);
 
@@ -98,23 +101,9 @@ function ShowAllBdayPage() {
                         ]);
                     }
                 }
-                // payload[item].forEach((subItem) => {
-                //     tablePattern.content.push([
-                //         {
-                //             name: 'date', className: 'td-m',
-                //             children: subItem.day
-                //         },
-                //         {
-                //             name: 'name',
-                //             children: subItem.fullName,
-                //             className: 'td-l',
-                //         },
-                //     ]);
-                // });
-
                 table.push(<Table key={'table' + item}
-                                  classNameTable={'tableForViewMode'}
-                                  classNameBlock={'blockForViewMode'}
+                                  classNameTable={'table-viewMode'}
+                                  classNameBlock={'div-forViewMode'}
                                   classNameTableHead={'heading'}
                                   header={tablePattern.header} content={tablePattern.content}
                                   isLoading={isLoading}/>);
@@ -145,7 +134,7 @@ function ShowAllBdayPage() {
                                                   date: ''
                                               })
                                           }}/>,
-                        <Button key={'ButtonDelete' + subIndex} children={'Delete'} className={"btnDelete"}
+                        <Button key={'ButtonDelete' + subIndex} children={'Delete'} className={"btn-delete"}
                                 onClick={() => {
                                     setCurrentId(subItem.id);
                                     setShowSimpleModal(true);
@@ -182,20 +171,19 @@ function ShowAllBdayPage() {
                           header={tablePattern.header} content={tablePattern.content}
                           isLoading={isLoading}/>);
     }
-    //console.log('..........', payload);
-    //return <div>CalendarPage{JSON.stringify(payload)}</div>;
+
     return <div>
         <Modal show={showSimpleModal} header={'Delete'}
                content={<>You sure?
-                   <Button className={'yesButton'}
+                   <Button className={'btn-modal-yes'}
                            children={'No'}
                            onClick={() => setShowSimpleModal(false)}/>
-                   <Button className={'yesButton'} children={'Yes'}
+                   <Button className={'btn-modal-yes'} children={'Yes'}
                            onClick={() => handleDelete(currentId)}/>
                </>}
                toClose={() => setShowSimpleModal(false)}/>
         <Modal show={showModal} header={'Edit birthday'}
-               content={<FormBday onSave={(data) => {
+               content={<FormBday edit={true} onSave={(data) => {
                    handleEdit(data.id, {
                        firstName: data.firstName,
                        lastName: data.lastName,
@@ -207,7 +195,7 @@ function ShowAllBdayPage() {
                toClose={() => setShowModal(false)}/>
         <SnackBar show={showSnackBar} content={snackBarContent}/>
         <br/>
-        <Button className={'viewModeButton'} children={'view mode'} onClick={() => setViewMode(!viewMode)}/><br/>
+        <Button className={'btn-viewMode'} children={'view mode'} onClick={() => setViewMode(!viewMode)}/><br/>
         <br/>
         <div>{table}</div>
     </div>;
@@ -218,11 +206,7 @@ export default ShowAllBdayPage;
 let tablePattern = {
     classNameTable: '',
     classNameTableHead: '',
-    header: [
-        // {name: 'date', alias: 'date', className: 'td-sm'},
-        // {name: 'fullName', alias: 'Name', className: 'td-l'},
-        // {name: 'action', alias: '', className: 'td-action'},
-    ],
+    header: [],
     content: []
 };
 

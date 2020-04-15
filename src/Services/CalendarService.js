@@ -5,15 +5,12 @@ import {
     editBday,
     getTemplatesList,
     addTemplate,
-    deleteTemplate, getTemplate, editTemplate,
+    deleteTemplate, getTemplate, editTemplate, getTemplateWithBday,
 } from "../api";
 
 class CalendarService {
     fetchListOfBdays() {
         return getBdaysList().then(res => res.data);
-        // return new Promise(resolve => {
-        //     setTimeout(resolve, 3000, fakeData);
-        // });
     }
 
     deleteBday(id) {
@@ -46,6 +43,10 @@ class CalendarService {
     }
     editTemplate(id, data) {
         return editTemplate(id, data).then(res => res);
+    }
+
+    getTemplateWithBday(templateId,bdayId) {
+        return getTemplateWithBday(templateId,bdayId).then(res => res.data);
     }
 }
 

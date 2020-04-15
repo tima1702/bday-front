@@ -1,0 +1,35 @@
+.p-selectUser {
+  margin: 0;
+  padding: 10px 10px 10px 25px;
+  font-weight: normal;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: #894641;
+  font-size: 16px;
+}
+
+.div-tableOfBdays {
+  padding: 5px;
+
+  .th-l {
+    &:hover {
+      cursor: pointer;
+      font-weight: bold;
+    }
+  }
+}
+
+.selectedUser {
+  background-color: #dedede;
+  border-radius: 5px;
+}
+
+
+.button-go {
+  float: right;
+  padding: 5px;
+
+  &:hover {
+    cursor: pointer;
+  }
+}
